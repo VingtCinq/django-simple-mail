@@ -68,6 +68,17 @@ You can customize the template with ``CONTEXT`` settings :
         }
     }
 
+Django Admin
+------------
+
+You can manage your emails and their content directly from django admin
+:
+
+.. figure:: https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin.png
+   :alt: Admin Preview
+
+   Admin Preview
+
 Settings
 --------
 

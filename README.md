@@ -68,6 +68,13 @@ DEFAULTS = {
 }
 ```
 
+## Django Admin
+
+You can manage your emails and their content directly from django admin :
+
+![Admin Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin.png)
+
+
 ## Settings
 
 Here are all the settings you can define:
