@@ -25,10 +25,10 @@ Add `simple_mail` to your INSTALLED_APPS setting.
 
 
 ```python
-    INSTALLED_APPS = (
-        ...
-        'simple_mail',
-    )
+INSTALLED_APPS = (
+    ...
+    'simple_mail',
+)
 ```
 
 Then run :
@@ -73,6 +73,10 @@ DEFAULTS = {
 You can manage your emails and their content directly from django admin :
 
 ![Admin Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin.png)
+
+You can also use variables inside the fields to make your content more dynamic :
+
+![Admin Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin-context.png)
 
 
 ## Settings
