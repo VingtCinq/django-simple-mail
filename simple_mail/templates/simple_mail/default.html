@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>{{ subject }}</title>
+        <style type="text/css">
+			/* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
+			#outlook a{padding:0;} /* Force Outlook to provide a "view in browser" message */
+			.ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
+			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing */
+			body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
+			table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up */
+			img{-ms-interpolation-mode:bicubic;} /* Allow smoother rendering of resized image in Internet Explorer */
+
+			/* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
+			body{margin:0; padding:0;}
+			img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
+			table{border-collapse:collapse !important;}
+			body, #bodyTable, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;}
+
+			/* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
+
+			/* ========== Page Styles ========== */
+
+			#bodyCell{padding:20px;}
+			#templateContainer{width:600px;}
+
+			/**
+			* @tab Page
+			* @section background style
+			* @tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+			* @theme page
+			*/
+			body, #bodyTable{
+				background-color:{{colors.background}};
+			}
+
+			/**
+			* @tab Page
+			* @section background style
+			* @tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+			* @theme page
+			*/
+
+
+			/**
+			* @tab Page
+			* @section email border
+			* @tip Set the border for your email.
+			*/
+			#templateContainer{
+				border:1px solid {{colors.container_border}};
+			}
+
+			/**
+			* @tab Page
+			* @section heading 1
+			* @tip Set the styling for all first-level headings in your emails. These should be the largest of your headings.
+			* @style heading 1
+			*/
+			h1{
+				color:{{colors.title}} !important;
+				display:block;
+				font-family:Helvetica;
+				font-size:26px;
+				font-style:normal;
+				font-weight:bold;
+				line-height:100%;
+				letter-spacing:normal;
+				margin-top:0;
+				margin-right:0;
+				margin-bottom:10px;
+				margin-left:0;
+				text-align:left;
+			}
+
+			/* ========== Header Styles ========== */
+
+			/**
+			* @tab Header
+			* @section header style
+			* @tip Set the background color and borders for your email's header area.
+			* @theme header
+			*/
+			#templateHeader{
+				background-color:{{colors.container_background}};
+				border-bottom:1px solid {{colors.container_border}};
+			}
+
+			/**
+			* @tab Header
+			* @section header text
+			* @tip Set the styling for your email's header text. Choose a size and color that is easy to read.
+			*/
+			.headerContent{
+				padding-top:0;
+				padding-right:0;
+				padding-bottom:0;
+				padding-left:0;
+				text-align:left;
+				vertical-align:middle;
+			}
+
+
+			#headerImage{
+				height:auto;
+				max-width:600px;
+				display: block;
+			}
+
+			/* ========== Body Styles ========== */
+
+			/**
+			* @tab Body
+			* @section body style
+			* @tip Set the background color and borders for your email's body area.
+			*/
+			#templateBody{
+				background-color:{{colors.container_background}};
+				border-bottom:1px solid {{colors.container_border}};
+			}
+
+			/**
+			* @tab Body
+			* @section body text
+			* @tip Set the styling for your email's main content text. Choose a size and color that is easy to read.
+			* @theme main
+			*/
+			.bodyContent{
+				color:{{colors.container}};
+				font-family:Helvetica;
+				font-size:14px;
+				line-height:150%;
+				padding-top:20px;
+				padding-right:20px;
+				padding-bottom:20px;
+				padding-left:20px;
+				text-align:left;
+			}
+
+
+
+			#templateButton{
+				background-color:{{colors.container_background}};
+				border-bottom:1px solid {{colors.container_border}};
+			}
+
+			.buttonContent {
+				padding-top:20px;
+				padding-right:20px;
+				padding-bottom:20px;
+				padding-left:20px;
+			}
+
+			.buttonTable {
+			    background-color: {{colors.button}};
+			    border-collapse: separate;
+			    border-radius: 4px;
+			}
+
+			.button {
+			    color: {{colors.container_background}};
+			    font-family: Helvetica;
+			    font-size: 18px;
+			    font-weight: bold;
+			    line-height: 100%;
+			    padding: 15px;
+			    text-align: center;
+			}
+
+			.button a {
+			    color: {{colors.container_background}};
+			    display: block;
+			    text-decoration: none;
+			}
+			/* ========== Footer Styles ========== */
+
+			/**
+			* @tab Footer
+			* @section footer style
+			* @tip Set the background color and borders for your email's footer area.
+			* @theme footer
+			*/
+			#templateFooter{
+				background-color:{{colors.container_background}};
+			}
+
+			/**
+			* @tab Footer
+			* @section footer text
+			* @tip Set the styling for your email's footer text. Choose a size and color that is easy to read.
+			* @theme footer
+			*/
+			.footerContent{
+				color:{{colors.footer}};
+				font-family:Helvetica;
+				font-size:10px;
+				line-height:150%;
+				padding-top:20px;
+				padding-right:20px;
+				padding-bottom:20px;
+				padding-left:20px;
+				text-align:left;
+			}
+
+			.footerContent a{
+				color:{{colors.footer_link}};
+				text-decoration: none;
+			}
+
+			/**
+			* @tab Footer
+			* @section footer link
+			* @tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
+			*/
+			.footerContent a:link, .footerContent a:visited, /* Yahoo! Mail Override */ .footerContent a .yshortcuts, .footerContent a span /* Yahoo! Mail Override */{
+				color:#606060;
+				font-weight:normal;
+				text-decoration:underline;
+			}
+		</style>
+		<style type="text/css" data-premailer="ignore">
+			/* /\/\/\/\/\/\/\/\/ MOBILE STYLES /\/\/\/\/\/\/\/\/ */
+
+            @media only screen and (max-width: 480px){
+				/* /\/\/\/\/\/\/ CLIENT-SPECIFIC MOBILE STYLES /\/\/\/\/\/\/ */
+				body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:none !important;} /* Prevent Webkit platforms from changing default text sizes */
+                body{width:100% !important; min-width:100% !important;} /* Prevent iOS Mail from adding padding to the body */
+
+				/* /\/\/\/\/\/\/ MOBILE RESET STYLES /\/\/\/\/\/\/ */
+				#bodyCell{padding:10px !important;}
+
+				/* /\/\/\/\/\/\/ MOBILE TEMPLATE STYLES /\/\/\/\/\/\/ */
+
+				/* ======== Page Styles ======== */
+
+				/**
+				* @tab Mobile Styles
+				* @section template width
+				* @tip Make the template fluid for portrait or landscape view adaptability. If a fluid layout doesn't work for you, set the width to 300px instead.
+				*/
+				#templateContainer{
+					max-width:600px !important;
+					width:100% !important;
+				}
+
+				/**
+				* @tab Mobile Styles
+				* @section heading 1
+				* @tip Make the first-level headings larger in size for better readability on small screens.
+				*/
+				h1{
+					font-size:24px !important;
+					line-height:100% !important;
+				}
+
+				/* ======== Header Styles ======== */
+
+				/**
+				* @tab Mobile Styles
+				* @section header image
+				* @tip Make the main header image fluid for portrait or landscape view adaptability, and set the image's original width as the max-width. If a fluid setting doesn't work, set the image width to half its original size instead.
+				*/
+				#headerImage{
+					height:auto !important;
+					max-width:600px !important;
+					width:100% !important;
+				}
+
+				/* ======== Body Styles ======== */
+
+				/**
+				* @tab Mobile Styles
+				* @section body text
+				* @tip Make the body content text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+				*/
+				.bodyContent{
+					font-size:18px !important;
+					line-height:125% !important;
+				}
+
+				/* ======== Footer Styles ======== */
+
+				/**
+				* @tab Mobile Styles
+				* @section footer text
+				* @tip Make the body content text larger in size for better readability on small screens.
+				*/
+				.footerContent{
+					font-size:14px !important;
+					line-height:115% !important;
+				}
+
+				.footerContent a{display:block !important;} /* Place footer social and utility links on their own lines, for easier access */
+			}
+		</style>
+    </head>
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+    	<center>
+        	<table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+            	<tr>
+                	<td align="center" valign="top" id="bodyCell">
+                    	<!-- BEGIN TEMPLATE // -->
+                    	<table border="0" cellpadding="0" cellspacing="0" id="templateContainer">
+                        	<tr>
+                            	<td align="center" valign="top">
+                                	<!-- BEGIN HEADER // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader">
+                                        <tr>
+                                            <td valign="top" class="headerContent">
+                                            	<img src="{{header_url}}" style="max-width:600px;" id="headerImage" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // END HEADER -->
+                                </td>
+                            </tr>
+                        	<tr>
+                            	<td align="center" valign="top">
+                                	<!-- BEGIN BODY // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                                        <tr>
+                                            <td valign="top" class="bodyContent" >
+                                                <h1>{{title}}</h1>
+                                                <br/>
+                                                {{ body|linebreaksbr }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // END BODY -->
+                                </td>
+                            </tr>
+                            {% if button_link and button_label %}
+							<tr>
+                            	<td align="center" valign="top">
+                                	<!-- CENTERING TABLE // -->
+                                	<table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateButton">
+                                    	<tr>
+                                        	<td align="center" valign="top">
+                                            	<!-- FLEXIBLE CONTAINER // -->
+                                            	<table border="0" cellpadding="0" cellspacing="0" width="600">
+                                                	<tr>
+                                                    	<td align="center" valign="top" width="600" class="buttonContent">
+                                                            <table border="0" cellpadding="0" cellspacing="0" width="260" class="buttonTable">
+                                                                <tr>
+                                                                    <td align="center" valign="middle" class="button">
+                                                                        <a href="{{button_link}}" target="_blank">{{button_label}}</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <!-- // FLEXIBLE CONTAINER -->
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // CENTERING TABLE -->
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if footer_links or footer_content or footer_copyright %}
+                        	<tr>
+                            	<td align="center" valign="top">
+                                	<!-- BEGIN FOOTER // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
+                                    	{% if footer_links %}
+                                        <tr>
+                                            <td valign="top" class="footerContent" >
+                                            	{% for link in footer_links %}
+                                                <a href="{{ link.url }}">{{ link.label }}</a>&nbsp;&nbsp;&nbsp;
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if footer_content %}
+                                        <tr>
+                                            <td valign="top" class="footerContent" {% if footer_links %}style="padding-top: 0;"{% endif %}>
+                                            	{{ footer_content|linebreaksbr }}
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if footer_copyright %}
+                                        <tr>
+                                            <td valign="top" class="footerContent" {% if footer_content or footer_links %}style="padding-top: 0;"{% endif %}>
+                                                <em>Copyright &copy; {% now "Y" %} {{ footer_copyright }}, All rights reserved.</em>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                    </table>
+                                    <!-- // END FOOTER -->
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>
