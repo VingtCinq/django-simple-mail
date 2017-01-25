@@ -42,7 +42,7 @@ Then run :
 The default mail template is a fork of [Mailchimp email-blueprints](https://github.com/mailchimp/email-blueprints/blob/master/responsive-templates/base_boxed_basic_query.html) and looks like this with placeholder values:
 
 
-![Email Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/branch/master/docs/preview.png)
+![Email Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/preview.png)
 
 
 You can customize the template with `CONTEXT` settings :
