@@ -5,6 +5,7 @@ from django.db import models
 from simple_mail.settings import sm_settings
 from django.template import (Context, Template, loader)
 from django.core.mail import send_mail as django_send_mail
+from django.core import mail
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
 
@@ -69,3 +70,32 @@ class SimpleMail(models.Model):
             from_email=from_email,
             recipient_list=recipient_list,
             **email_kwargs)
+
+    def send_bulk(self, recipient_list, context={}, template_name=None, from_email=None):
+        """
+        Allows to bulk send email independently rather than all as recipient
+        """
+        if from_email is None:
+            try:
+                from_email = sm_settings.FROM_EMAIL
+            except AttributeError:
+                raise ImproperlyConfigured('FROM_EMAIL Should be configured')
+        email_kwargs = self.render(context, template_name)
+
+        emails = []
+        for recipient in recipient_list:
+            _msg = mail.EmailMessage(
+                email_kwargs['subject'].strip(),
+                email_kwargs['html'].strip(),
+                from_email,
+                [recipient],
+            )
+            _msg.content_subtype = 'html'
+            emails.append(
+                _msg
+            )
+
+        connection = mail.get_connection()
+        connection.open()
+        connection.send_messages(emails)
+        connection.close()
