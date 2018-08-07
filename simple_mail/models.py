@@ -28,7 +28,7 @@ class SimpleMail(models.Model):
     def __unicode__(self):
         return self.get_key_display()
 
-    def render(self, context={}, template_name=None):
+    def render(self, context={}, template=None):
         context_temp = sm_settings.CONTEXT.copy()
         context_temp.update(context)
         context_temp.update({
@@ -37,12 +37,12 @@ class SimpleMail(models.Model):
             'button_link': Template(self.button_link).render(Context(context_temp)),
             'body': Template(self.body).render(Context(context_temp)),
         })
-        if template_name is None:
+        if template is None:
             try:
-                template_name = sm_settings.TEMPLATE
+                template = sm_settings.TEMPLATE
             except AttributeError:
                 raise ImproperlyConfigured('TEMPLATE Should be configured')
-        html = loader.render_to_string(template_name, context_temp)
+        html = loader.render_to_string(template, context_temp)
         html = transform(html, base_url=sm_settings.BASE_URL)
         h = html2text.HTML2Text()
         h.ignore_images = True
@@ -55,14 +55,14 @@ class SimpleMail(models.Model):
         }
         return response
 
-    def get_email_message(self, to, context={}, template_name=None, from_email=None, bcc=[],
+    def get_email_message(self, to, context={}, template=None, from_email=None, bcc=[],
                           connection=None, attachments=[], headers={}, cc=[], reply_to=[]):
         if from_email is None:
             try:
                 from_email = sm_settings.FROM_EMAIL
             except AttributeError:
                 raise ImproperlyConfigured('FROM_EMAIL Should be configured')
-        email_kwargs = self.render(context, template_name)
+        email_kwargs = self.render(context, template)
         email_message = EmailMultiAlternatives(
             subject=email_kwargs.get('subject'),
             body=email_kwargs.get('message'),
@@ -84,19 +84,19 @@ class SimpleMail(models.Model):
         """
         return self.send(*args, **kwargs)
 
-    def send(self, to, context={}, template_name=None, from_email=None, bcc=[],
+    def send(self, to, context={}, template=None, from_email=None, bcc=[],
              connection=None, attachments=[], headers={}, cc=[], reply_to=[], fail_silently=False):
         """
-        Send the email with the template corresponding to `template_name`
+        Send the email with the template corresponding to `template`
         """
-        email_message = self.get_email_message(to, context, template_name, from_email, bcc, connection, attachments, headers, cc, reply_to)
+        email_message = self.get_email_message(to, context, template, from_email, bcc, connection, attachments, headers, cc, reply_to)
         return email_message.send(fail_silently=fail_silently)
 
-    def send_mass_mail(self, to, context={}, template_name=None, from_email=None, bcc=[],
+    def send_mass_mail(self, to, context={}, template=None, from_email=None, bcc=[],
                        connection=None, attachments=[], headers={}, cc=[], reply_to=[],
                        fail_silently=False, auth_user=None, auth_password=None):
         """
-        Send the same email with the template corresponding to `template_name` to each recipient in `to`independently
+        Send the same email with the template corresponding to `template` to each recipient in `to`independently
         """
         connection = connection or get_connection(
             username=auth_user,
@@ -104,7 +104,7 @@ class SimpleMail(models.Model):
             fail_silently=fail_silently
         )
         messages = [
-            self.get_email_message([recipient], context, template_name, from_email, bcc, connection, attachments, headers, cc, reply_to)
+            self.get_email_message([recipient], context, template, from_email, bcc, connection, attachments, headers, cc, reply_to)
             for recipient in to
         ]
         return connection.send_messages(messages)

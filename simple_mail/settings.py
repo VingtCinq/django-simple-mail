@@ -4,21 +4,24 @@ For example your project's `settings.py` file might look like this:
 
 SIMPLE_MAIL = {
     'CONTEXT': {
-        'company_name': '',
-        'footer_links': [],
-        'footer_content': '',
-        'header_url': 'http://placehold.it/600x150',
-        'footer_content': "Here is your content",
+        'header_url': 'http://placehold.it/1200x300',
+        'footer_content': "",
         'colors': {
-            'background': "#DEE0E2",
-            'container_border': "#BBBBBB",
-            'container_background': "#F4F4F4",
-            'container': "#505050",
-            'title': "#202020",
-            'footer': "#808080",
+            'background': "#222222",
+            'container_bg': "#FFFFFF",
+            'title': "#2C9AB7",
+            'content': "#444444",
+            'footer': "#888888",
+            'footer_bg': "#555555",
+            'button': "#FFFFFF",
+            'button_bg': "#2C9AB7",
         }
     },
-    'TEMPLATE': 'simple_mail/default.html'
+    'TEMPLATE': 'simple_mail/default.html',
+    'EMAIL_TO': '',
+    'EMAILS': [],
+    'BASE_URL': '',
+    'FROM_EMAIL': ''
 }
 
 This module provides the `sm_settings` object, that is used to access
@@ -50,19 +53,17 @@ def dict_nested_update(d, u):
 
 DEFAULTS = {
     'CONTEXT': {
-        'header_url': 'http://placehold.it/600x150',
-        'footer_links': [],
-        'footer_copyright': '',
-        'footer_content': "Here is your content",
+        'header_url': 'http://placehold.it/1200x300',
+        'footer_content': "",
         'colors': {
-            'background': "#EEEEEE",
-            'container_border': "#DDDDDD",
-            'container_background': "#FFFFFF",
-            'container': "#505050",
-            'title': "#444444",
+            'background': "#222222",
+            'container_bg': "#FFFFFF",
+            'title': "#2C9AB7",
+            'content': "#444444",
             'footer': "#888888",
-            'footer_link': "#2C9AB7",
-            'button': "#2C9AB7",
+            'footer_bg': "#555555",
+            'button': "#FFFFFF",
+            'button_bg': "#2C9AB7",
         }
     },
     'TEMPLATE': 'simple_mail/default.html',

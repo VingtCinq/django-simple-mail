@@ -1,4 +1,4 @@
-[![django-simple-mail v1.0.2 on PyPi](https://img.shields.io/badge/pypi-1.0.2-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v1.2.0 on PyPi](https://img.shields.io/badge/pypi-1.2.0-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -50,21 +50,24 @@ You can customize the template with `CONTEXT` settings :
 ```
 DEFAULTS = {
     'CONTEXT': {
-        'header_url': 'http://placehold.it/600x150',
-        'footer_links': [],
-        'footer_copyright': '',
-        'footer_content': "Here is your content",
+        'header_url': 'http://placehold.it/1200x300',
+        'footer_content': "",
         'colors': {
-            'background': "#EEEEEE",
-            'container_border': "#DDDDDD",
-            'container_background': "#FFFFFF",
-            'container': "#505050",
-            'title': "#444444",
+            'background': "#222222",
+            'container_bg': "#FFFFFF",
+            'title': "#2C9AB7",
+            'content': "#444444",
             'footer': "#888888",
-            'footer_link': "#2C9AB7",
-            'button': "#2C9AB7",
+            'footer_bg': "#555555",
+            'button': "#FFFFFF",
+            'button_bg': "#2C9AB7",
         }
-    }
+    },
+    'TEMPLATE': 'simple_mail/default.html',
+    'EMAIL_TO': '',
+    'EMAILS': [],
+    'BASE_URL': '',
+    'FROM_EMAIL': ''
 }
 ```
 
@@ -86,22 +89,21 @@ Here are all the settings you can define:
 ```
 SIMPLE_MAIL = {
     'CONTEXT': {
-        'header_url': 'http://placehold.it/600x150',
-        'footer_links': [],
-        'footer_copyright': '',
-        'footer_content': "Here is your content",
+        'header_url': 'http://placehold.it/1200x300',
+        'footer_content': "",
         'colors': {
-            'background': "#EEEEEE",
-            'container_border': "#DDDDDD",
-            'container_background': "#FFFFFF",
-            'container': "#505050",
-            'title': "#444444",
+            'background': "#222222",
+            'container_bg': "#FFFFFF",
+            'title': "#2C9AB7",
+            'content': "#444444",
             'footer': "#888888",
-            'footer_link': "#2C9AB7",
-            'button': "#2C9AB7",
+            'footer_bg': "#555555",
+            'button': "#FFFFFF",
+            'button_bg': "#2C9AB7",
         }
     },
     'TEMPLATE': 'simple_mail/default.html',
+    'EMAIL_TO': '',
     'EMAILS': [],
     'BASE_URL': '',
     'FROM_EMAIL': ''
