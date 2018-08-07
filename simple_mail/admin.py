@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.core.exceptions import PermissionDenied
 from django.contrib.admin.utils import unquote
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.utils.html import escape
 from django.urls import path, reverse
 from django.utils.translation import gettext, gettext_lazy as _
@@ -25,6 +25,20 @@ class SimpleMailAdmin(admin.ModelAdmin):
     send_test_mail_form = AdminSendTestMailForm
 
     simplemail_send_test_mail_template = None
+    simplemail_preview_mail_template = None
+
+    def preview_mail(self, request, id):
+        if not self.has_change_permission(request):
+            raise PermissionDenied
+        mail = self.get_object(request, unquote(id))
+        if mail is None:
+            raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {
+                'name': self.model._meta.verbose_name,
+                'key': escape(id),
+            })
+        html = mail.render().get('html_message')
+        return HttpResponse(html)
+
 
     @sensitive_post_parameters_m
     def send_test_mail(self, request, id, form_url=''):
@@ -93,6 +107,11 @@ class SimpleMailAdmin(admin.ModelAdmin):
                 '<id>/send-test-mail/',
                 self.admin_site.admin_view(self.send_test_mail),
                 name='send_test_mail',
+            ),
+            path(
+                '<id>/preview-mail/',
+                self.admin_site.admin_view(self.preview_mail),
+                name='preview_mail',
             ),
         ] + super().get_urls()
 

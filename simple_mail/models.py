@@ -28,7 +28,7 @@ class SimpleMail(models.Model):
     def __unicode__(self):
         return self.get_key_display()
 
-    def render(self, context, template_name):
+    def render(self, context={}, template_name=None):
         context_temp = sm_settings.CONTEXT.copy()
         context_temp.update(context)
         context_temp.update({
