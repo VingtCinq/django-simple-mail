@@ -15,7 +15,7 @@ class SimpleMail(models.Model):
     """
     Define an email
     """
-    key = models.CharField(verbose_name=_(u"Email"), choices=sm_settings.EMAILS, max_length=20, unique=True)
+    key = models.CharField(verbose_name=_(u"Email Key"), choices=sm_settings.EMAILS, max_length=20, unique=True)
     subject = models.CharField(max_length=255, verbose_name=_(u"Subject"))
     title = models.CharField(max_length=255, verbose_name=_(u"Title"))
     body = models.TextField(verbose_name=_(u"Content"))
@@ -75,7 +75,7 @@ class SimpleMail(models.Model):
             cc=cc,
             reply_to=reply_to
         )
-        email_message.attach_alternative(html_content, "text/html")
+        email_message.attach_alternative(email_kwargs.get('html_message'), "text/html")
         return email_message
 
     def send_mail(self, *args, **kwargs):
