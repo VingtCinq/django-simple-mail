@@ -15,7 +15,7 @@ except Exception:
 
 setup(
     name='django_simple_mail',
-    version='0.1.0',
+    version='1.0.0',
     description='A simple and customizable email template built for Django',
     long_description=long_description,
     url='https://github.com/charlesthk/django-simple-mail',
@@ -27,6 +27,9 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
+        'Framework :: Django :: 2.1',
+        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 1.11',
         'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.9',
         'Programming Language :: Python :: 2',
@@ -39,14 +42,16 @@ setup(
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
     keywords='python django mail html template',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'html2text>=2016.9.19',
-        'premailer>=3.0.1',
-        'six>=1.10.0',
+        'html2text>=2018.1.9',
+        'premailer>=3.2.0',
+        'six>=1.11.0',
     ],
     # test_suite='tests',
 )

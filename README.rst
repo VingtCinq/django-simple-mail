@@ -1,4 +1,4 @@
-|django-simple-mail v0.1.0 on PyPi| |MIT license| |Stable|
+|django-simple-mail v1.0.0 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -20,14 +20,14 @@ Install using ``pip`` :
 
 ``pip install django_simple_mail``
 
-Add ``simple_mail`` to your INSTALLED\_APPS setting.
+Add ``simple_mail`` to your INSTALLED_APPS setting.
 
 .. code:: python
 
-        INSTALLED_APPS = (
-            ...
-            'simple_mail',
-        )
+    INSTALLED_APPS = (
+        ...
+        'simple_mail',
+    )
 
 Then run :
 
@@ -75,6 +75,14 @@ You can manage your emails and their content directly from django admin
 :
 
 .. figure:: https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin.png
+   :alt: Admin Preview
+
+   Admin Preview
+
+You can also use variables inside the fields to make your content more
+dynamic :
+
+.. figure:: https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin-context.png
    :alt: Admin Preview
 
    Admin Preview
@@ -156,7 +164,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v0.1.0 on PyPi| image:: https://img.shields.io/badge/pypi-0.1.0-green.svg
+.. |django-simple-mail v1.0.0 on PyPi| image:: https://img.shields.io/badge/pypi-1.0.0-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

@@ -4,8 +4,7 @@ import html2text
 from django.db import models
 from simple_mail.settings import sm_settings
 from django.template import (Context, Template, loader)
-from django.core.mail import send_mail as django_send_mail
-from django.core import mail
+from django.core.mail import EmailMultiAlternatives, get_connection
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
 
@@ -56,46 +55,57 @@ class SimpleMail(models.Model):
         }
         return response
 
-    def send(self, recipient_list, context={}, template_name=None, from_email=None):
-        """
-        Send the email
-        """
+    def get_email_message(self, to, context={}, template_name=None, from_email=None, bcc=[],
+                          connection=None, attachments=[], headers={}, cc=[], reply_to=[]):
         if from_email is None:
             try:
                 from_email = sm_settings.FROM_EMAIL
             except AttributeError:
                 raise ImproperlyConfigured('FROM_EMAIL Should be configured')
         email_kwargs = self.render(context, template_name)
-        return django_send_mail(
+        email_message = EmailMultiAlternatives(
+            subject=email_kwargs.get('subject'),
+            body=email_kwargs.get('message'),
             from_email=from_email,
-            recipient_list=recipient_list,
-            **email_kwargs)
+            to=to,
+            bcc=bcc,
+            connection=connection,
+            attachments=attachments,
+            headers=headers,
+            cc=cc,
+            reply_to=reply_to
+        )
+        email_message.attach_alternative(html_content, "text/html")
+        return email_message
 
-    def send_bulk(self, recipient_list, context={}, template_name=None, from_email=None):
+    def send_mail(self, *args, **kwargs):
         """
-        Allows to bulk send email independently rather than all as recipient
+        Create an alias to the `send` method to be consistent with django base naming
         """
-        if from_email is None:
-            try:
-                from_email = sm_settings.FROM_EMAIL
-            except AttributeError:
-                raise ImproperlyConfigured('FROM_EMAIL Should be configured')
-        email_kwargs = self.render(context, template_name)
+        return self.send(*args, **kwargs)
 
-        emails = []
-        for recipient in recipient_list:
-            _msg = mail.EmailMessage(
-                email_kwargs['subject'].strip(),
-                email_kwargs['html'].strip(),
-                from_email,
-                [recipient],
-            )
-            _msg.content_subtype = 'html'
-            emails.append(
-                _msg
-            )
+    def send(self, to, context={}, template_name=None, from_email=None, bcc=[],
+             connection=None, attachments=[], headers={}, cc=[], reply_to=[], fail_silently=False):
+        """
+        Send the email with the template corresponding to `template_name`
+        """
+        email_message = self.get_email_message(to, context, template_name, from_email, bcc, connection, attachments, headers, cc, reply_to)
+        return email_message.send(fail_silently=fail_silently)
 
-        connection = mail.get_connection()
-        connection.open()
-        connection.send_messages(emails)
-        connection.close()
+    def send_mass_mail(self, to, context={}, template_name=None, from_email=None, bcc=[],
+                       connection=None, attachments=[], headers={}, cc=[], reply_to=[],
+                       fail_silently=False, auth_user=None, auth_password=None):
+        """
+        Send the same email with the template corresponding to `template_name` to each recipient in `to`independently
+        """
+        connection = connection or get_connection(
+            username=auth_user,
+            password=auth_password,
+            fail_silently=fail_silently
+        )
+        messages = [
+            self.get_email_message([recipient], context, template_name, from_email, bcc, connection, attachments, headers, cc, reply_to)
+            for recipient in to
+        ]
+        return connection.send_messages(messages)
+
