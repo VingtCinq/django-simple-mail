@@ -15,7 +15,7 @@ except Exception:
 
 setup(
     name='django_simple_mail',
-    version='1.2.4',
+    version='1.2.5',
     description='A simple and customizable email template built for Django',
     long_description=long_description,
     url='https://github.com/charlesthk/django-simple-mail',

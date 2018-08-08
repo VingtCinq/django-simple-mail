@@ -1,4 +1,4 @@
-|django-simple-mail v1.2.4 on PyPi| |MIT license| |Stable|
+|django-simple-mail v1.2.5 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -166,7 +166,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v1.2.4 on PyPi| image:: https://img.shields.io/badge/pypi-1.2.4-green.svg
+.. |django-simple-mail v1.2.5 on PyPi| image:: https://img.shields.io/badge/pypi-1.2.5-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

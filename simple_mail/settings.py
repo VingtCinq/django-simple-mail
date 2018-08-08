@@ -7,8 +7,9 @@ SIMPLE_MAIL = {
         'header_url': 'http://placehold.it/1200x300',
         'footer_content': "",
         'colors': {
-            'background': "#222222",
+            'background': "#FFFFFF",
             'container_bg': "#FFFFFF",
+            'container_border': "#CCCCCC",
             'title': "#2C9AB7",
             'content': "#444444",
             'footer': "#888888",
@@ -56,8 +57,9 @@ DEFAULTS = {
         'header_url': 'http://placehold.it/1200x300',
         'footer_content': "",
         'colors': {
-            'background': "#222222",
+            'background': "#FFFFFF",
             'container_bg': "#FFFFFF",
+            'container_border': "#CCCCCC",
             'title': "#2C9AB7",
             'content': "#444444",
             'footer': "#888888",

@@ -1,3 +1,5 @@
+{% extends 'admin/change_form.html' %}
+
 {% load i18n admin_urls %}
 {% block object-tools-items %}
 <li>
@@ -12,4 +14,3 @@
 </li>
 {% if has_absolute_url %}<li><a href="{{ absolute_url }}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif %}
 {% endblock %}
-
