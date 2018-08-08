@@ -10,7 +10,7 @@
 """
 
 __title__ = 'Simple Mail'
-__version__ = '1.2.5'
+__version__ = '2.0.0'
 __author__ = 'Charles TISSIER'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2017 Charles TISSIER'
@@ -20,3 +20,4 @@ VERSION = __version__
 
 
 default_app_config = 'simple_mail.apps.SimpleMailConfig'
+

@@ -7,10 +7,10 @@
     <a href="{% add_preserved_filters history_url %}" class="historylink">{% trans "History" %}</a>
 </li>
 <li>
-    <a href="../send-test-mail" class="historylink">Send test mail</a>
+    <a href="../send-test-mail" class="historylink">{% trans "Send test mail" %}</a>
 </li>
 <li>
-    <a href="../preview-mail" class="historylink" target="_blank">Preview mail</a>
+    <a href="../preview-mail" class="historylink" target="_blank">{% trans "Preview mail" %}</a>
 </li>
 {% if has_absolute_url %}<li><a href="{{ absolute_url }}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif %}
 {% endblock %}

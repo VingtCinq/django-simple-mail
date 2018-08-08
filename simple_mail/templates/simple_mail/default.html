@@ -155,8 +155,8 @@
 	    }
 	    .button-td-primary:hover,
 	    .button-a-primary:hover {
-	        background: {{colors.button_bg}} !important;
-	        border-color: {{colors.button_bg}} !important;
+	        background: {{color_button_bg}} !important;
+	        border-color: {{color_button_bg}} !important;
 	    }
 
 	    /* Media Queries */
@@ -189,8 +189,8 @@
 	2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
 	3. mso conditional: For Windows 10 Mail
 -->
-<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: {{colors.background}};">
-	<center style="width: 100%; background-color: {{colors.background}};">
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: {{color_bg}};">
+	<center style="width: 100%; background-color: {{color_bg}};">
     <!--[if mso | IE]>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #222222;">
     <tr>
@@ -223,23 +223,23 @@
             <![endif]-->
 
 	        <!-- Email Body : BEGIN -->
-	        <table align="center" role="presentation" cellspacing="0" cellpadding="0" width="100%" style="margin: 0 auto; border:1px solid {{colors.container_border}};">
+	        <table align="center" role="presentation" cellspacing="0" cellpadding="0" width="100%" style="margin: 0 auto; border:1px solid {{color_container_border}};">
 
                 <!-- Hero Image, Flush : BEGIN -->
                 <tr>
-                    <td style="background-color: {{colors.container_bg}};">
-                        <img src="{{header_url}}" width="600" height="" alt="alt_text" border="0" style="width: 100%; max-width: 600px; height: auto; background: {{colors.container_bg}}; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: auto;" class="g-img">
+                    <td style="background-color: {{color_container_bg}};">
+                        <img src="{{header_url}}" width="600" height="" alt="alt_text" border="0" style="width: 100%; max-width: 600px; height: auto; background: {{color_container_bg}}; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: auto;" class="g-img">
                     </td>
                 </tr>
                 <!-- Hero Image, Flush : END -->
 
                 <!-- 1 Column Text + Button : BEGIN -->
                 <tr>
-                    <td style="background-color: {{colors.container_bg}};">
+                    <td style="background-color: {{color_container_bg}};">
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>
-                                <td style="padding: 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: {{colors.content}};">
-                                    <h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 25px; line-height: 30px; color: {{colors.title}}; font-weight: normal;">{{title}}</h1>
+                                <td style="padding: 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: {{color_content}};">
+                                    <h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 25px; line-height: 30px; color: {{color_title}}; font-weight: normal;">{{title}}</h1>
                                     <p style="margin: 0;">{{body|linebreaksbr}}</p>
                                 </td>
 							</tr>
@@ -249,8 +249,8 @@
                                     <!-- Button : BEGIN -->
                                     <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
                                         <tr>
-                                            <td class="button-td button-td-primary" style="border-radius: 4px; background: {{colors.button_bg}};">
-											     <a class="button-a button-a-primary" href="{{button_link}}" style="background: {{colors.button_bg}}; border: 1px solid {{colors.button_bg}}; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: {{colors.button}}; display: block; border-radius: 4px;">{{button_label}}</a>
+                                            <td class="button-td button-td-primary" style="border-radius: 4px; background: {{color_button_bg}};">
+											     <a class="button-a button-a-primary" href="{{button_link}}" style="background: {{color_button_bg}}; border: 1px solid {{color_button_bg}}; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: {{color_button}}; display: block; border-radius: 4px;">{{button_label}}</a>
 											</td>
                                         </tr>
                                     </table>
@@ -268,7 +268,7 @@
             <!-- Email Footer : BEGIN -->
 	        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 auto;">
                 <tr>
-                    <td style="padding: 20px; font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: {{colors.footer}}; background-color: {{colors.footer_bg}};">
+                    <td style="padding: 20px; font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: {{color_footer}}; background-color: {{color_footer_bg}};">
 						{{footer_content|linebreaksbr}}
                     </td>
                 </tr>
