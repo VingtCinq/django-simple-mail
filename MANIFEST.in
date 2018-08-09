@@ -1,3 +1,1 @@
-include simple_mail/templates/simple_mail/default.html
-include simple_mail/templates/admin/simple_mail/change_form_object_tools.html
-include simple_mail/templates/admin/simple_mail/send_test_mail.html
+recursive-include simple_mail/templates *

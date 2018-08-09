@@ -1,4 +1,4 @@
-[![django-simple-mail v2.0.0 on PyPi](https://img.shields.io/badge/pypi-2.0.0-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v2.0.1 on PyPi](https://img.shields.io/badge/pypi-2.0.1-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -20,21 +20,25 @@ Install using `pip` :
 
 `pip install django_simple_mail`
 
+Simple mail depend on two other apps :
 
-Add `simple_mail` and `solo` to your INSTALLED_APPS setting.
++ `solo` to allow email template configuration directly in Django's admin
++ `ckeditor` to allow WYSIWYG for email content edition
 
+Add `simple_mail`, `solo` and `ckeditor` to your INSTALLED_APPS setting.
 
 ```python
 INSTALLED_APPS = (
     ...
     'simple_mail',
-    'solo'
+    'solo',
+    'ckeditor',
+    ...
 )
 ```
 
 Then run :
 
-`python manage.py makemigrations`
 `python manage.py migrate`
 
 

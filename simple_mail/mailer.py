@@ -35,6 +35,10 @@ class BaseSimpleMail(object):
         from simple_mail.models import SimpleMail
         return SimpleMail.objects.get(key=self.email_key)
 
+    def render(self, context={}):
+        mail = self.get_mail()
+        return mail.render(context, self.template)
+
     def send_test_mail(self, to):
         mail = self.get_mail()
         context = self.get_test_context()

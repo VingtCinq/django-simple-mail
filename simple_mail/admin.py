@@ -19,39 +19,40 @@ sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
 
 from django import forms
 
-class ColorInput(forms.TextInput):
+class ColorInput(forms.widgets.Input):
     input_type = 'color'
+
+
+def get_widgets():
+    widgets = {}
+    for field in SimpleMailConfig.COLOR_FIELDS:
+        widgets[field] = ColorInput
+    return widgets
 
 
 class SimpleMailConfigAdminForm(forms.ModelForm):
     class Meta:
         model = SimpleMailConfig
-        widgets = {
-            'color_bg': ColorInput,
-            'color_container_bg': ColorInput,
-            'color_container_border': ColorInput,
-            'color_title': ColorInput,
-            'color_content': ColorInput,
-            'color_footer': ColorInput,
-            'color_footer_bg': ColorInput,
-            'color_button': ColorInput,
-            'color_button_bg': ColorInput,
-        }
+        widgets = get_widgets()
         exclude = []
 
+
 class SimpleMailConfigAdmin(SingletonModelAdmin):
+    # we override `change_form_template` to fix a pending feature request
+    change_form_template = 'admin/simple_mail/change_form_solo.html'
     fieldsets = (
         ('General', {
             'fields': ('base_url', 'from_email', 'from_name',)
         }),
         ('Header', {
-            'fields': ('header',)
+            'fields': ('logo',)
         }),
         ('Footer', {
-            'fields': ('footer_content',)
+            'fields': ('footer_content', 'facebook_url', 'twitter_url', 'instagram_url', 'website_url',)
         }),
-        ('Colors', {
-            'fields': ('color_bg', 'color_container_bg', 'color_container_border', 'color_title', 'color_content', 'color_footer', 'color_footer_bg', 'color_button', 'color_button_bg',),
+        ('Design', {
+            'fields': ('color_header_container_bg', 'color_header_bg', 'color_body_container_bg', 'color_body_bg', 'color_title', 'color_body', 'color_body_link', 'color_button', 'color_button_bg', 'border_radius_button', 'color_footer_container_bg', 'color_footer_bg', 'color_footer', 'color_footer_link', 'color_footer_divider', ),
+            'classes': ('wide',)
         }),
     )
     form = SimpleMailConfigAdminForm
@@ -85,7 +86,9 @@ class SimpleMailAdmin(admin.ModelAdmin):
                 'name': self.model._meta.verbose_name,
                 'key': escape(id),
             })
-        html = mail.render().get('html_message')
+        from simple_mail.mailer import simple_mailer
+        test_mail = simple_mailer._registry.get(mail.key)
+        html = test_mail().render().get('html_message')
         return HttpResponse(html)
 
 

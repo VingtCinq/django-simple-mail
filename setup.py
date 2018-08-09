@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import simple_mail
 from setuptools import setup, find_packages
 
 
@@ -15,7 +16,7 @@ except Exception:
 
 setup(
     name='django_simple_mail',
-    version='2.0.0',
+    version=simple_mail.__version__,
     description='A simple and customizable email template built for Django',
     long_description=long_description,
     url='https://github.com/charlesthk/django-simple-mail',
@@ -54,6 +55,7 @@ setup(
         'Pillow>=5.2.0',
         'django-imagekit>=4.0.2',
         'django-solo>=1.1.3',
+        'django-ckeditor>=5.6.1',
         'six>=1.11.0',
     ],
     # test_suite='tests',
