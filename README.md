@@ -72,10 +72,11 @@ welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
 
 ## Preview and customization:
 
-The default mail template is built with [Cerberus](https://github.com/TedGoas/Cerberus) and looks like this with placeholder values:
+Three mail templates are available. They were built with [Mailchimp](https://mailchimp.com/) editor and looks like this with placeholder values:
 
+### Alpha
 
-![Email Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/preview.png)
+![Email Preview](docs/preview-alpha.png)
 
 
 ## Django Admin
