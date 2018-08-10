@@ -1,3 +1,2 @@
 recursive-include simple_mail/templates *
-exclude simple_mail/mails.py
 global-exclude .DS_Store
