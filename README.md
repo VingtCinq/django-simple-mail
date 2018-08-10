@@ -6,24 +6,13 @@
 
 Simple customizable email template built for Django
 
-The 2.* version have breacking changes from the 1.* and are not backward compatible.
+The 2.* versions have breaking changes from the 1.* and are not backward compatible.
 
 ## Template preview
 
 The base template was built with [Mailchimp](https://mailchimp.com/) editor :
 
 ![Email Preview](docs/preview.png)
-
-
-## Mail configuration & edition
-
-Customize your base content and template colors :
-
-![Admin mail configuration](docs/admin-mail-template-configuration.png)
-
-Edit the content of each of your mail :
-
-![Admin mail edition](docs/admin-mail-edition.png)
 
 ## Requirements
 
@@ -39,7 +28,7 @@ Install using `pip` :
 
 `pip install django_simple_mail`
 
-Add `simple_mail` to your INSTALLED_APPS setting.
+Add `simple_mail` to your INSTALLED_APPS settings.
 
 ```python
 INSTALLED_APPS = (
@@ -53,14 +42,14 @@ Then run :
 
 `python manage.py migrate`
 
-## WYSIWYG
+### WYSIWYG
 
 Simple Mail easily integrates with `django-ckeditor` to have a wysiwyg edition of content.
 To use it :
 
 `pip install django-ckeditor`
 
-Then add `ckeditor` to your INSTALLED_APPS setting.
+Then add `ckeditor` to your INSTALLED_APPS settings.
 
 ```python
 INSTALLED_APPS = (
@@ -70,7 +59,7 @@ INSTALLED_APPS = (
 )
 ```
 
-And set the following setting :
+And set the following in your settings :
 
 `SIMPLE_MAIL_USE_CKEDITOR = True`
 
@@ -105,7 +94,23 @@ welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
                    headers={}, cc=[], reply_to=[], fail_silently=False)
 ```
 
-## custom template Customization:
+## Mail configuration & edition
+
+### Customize your base content and template colors
+
+You change the look and feel or your template directly from the django admin :
+The **Footer** field can use template tags and variables.
+
+![Admin mail configuration](docs/admin-mail-template-configuration.png)
+
+### Edit the content of each of your mail :
+
+You can edit the content of each of your mail.
+The **Content**, **Subject**, **button label** and **button link** fields can use template tags and variables.
+
+![Admin mail edition](docs/admin-mail-edition.png)
+
+## Custom template
 
 You can define your own email template :
 

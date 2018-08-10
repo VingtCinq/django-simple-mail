@@ -5,7 +5,7 @@ django-simple-mail
 
 Simple customizable email template built for Django
 
-The 2.\* version have breacking changes from the 1.\* and are not
+The 2.\* versions have breaking changes from the 1.\* and are not
 backward compatible.
 
 Template preview
@@ -18,23 +18,6 @@ editor :
    :alt: Email Preview
 
    Email Preview
-
-Mail configuration & edition
-----------------------------
-
-Customize your base content and template colors :
-
-.. figure:: docs/admin-mail-template-configuration.png
-   :alt: Admin mail configuration
-
-   Admin mail configuration
-
-Edit the content of each of your mail :
-
-.. figure:: docs/admin-mail-edition.png
-   :alt: Admin mail edition
-
-   Admin mail edition
 
 Requirements
 ------------
@@ -51,7 +34,7 @@ Install using ``pip`` :
 
 ``pip install django_simple_mail``
 
-Add ``simple_mail`` to your INSTALLED_APPS setting.
+Add ``simple_mail`` to your INSTALLED_APPS settings.
 
 .. code:: python
 
@@ -66,14 +49,14 @@ Then run :
 ``python manage.py migrate``
 
 WYSIWYG
--------
+~~~~~~~
 
 Simple Mail easily integrates with ``django-ckeditor`` to have a wysiwyg
 edition of content. To use it :
 
 ``pip install django-ckeditor``
 
-Then add ``ckeditor`` to your INSTALLED_APPS setting.
+Then add ``ckeditor`` to your INSTALLED_APPS settings.
 
 .. code:: python
 
@@ -83,7 +66,7 @@ Then add ``ckeditor`` to your INSTALLED_APPS setting.
         ...
     )
 
-And set the following setting :
+And set the following in your settings :
 
 ``SIMPLE_MAIL_USE_CKEDITOR = True``
 
@@ -121,8 +104,34 @@ You can the send the ``WelcomeEmail`` the following way :
     welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
                        headers={}, cc=[], reply_to=[], fail_silently=False)
 
-custom template Customization:
-------------------------------
+Mail configuration & edition
+----------------------------
+
+Customize your base content and template colors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You change the look and feel or your template directly from the django
+admin : The **Footer** field can use template tags and variables.
+
+.. figure:: docs/admin-mail-template-configuration.png
+   :alt: Admin mail configuration
+
+   Admin mail configuration
+
+Edit the content of each of your mail :
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can edit the content of each of your mail. The **Content**,
+**Subject**, **button label** and **button link** fields can use
+template tags and variables.
+
+.. figure:: docs/admin-mail-edition.png
+   :alt: Admin mail edition
+
+   Admin mail edition
+
+Custom template
+---------------
 
 You can define your own email template :
 

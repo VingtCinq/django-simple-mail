@@ -50,7 +50,7 @@ class SimpleMailConfig(SingletonModel):
     # Header
     logo = models.ImageField(verbose_name=_("Logo"), upload_to="simple_mail", blank=True, null=True)
     # footer
-    footer_content = SimpleMailRichTextField(config_name="simple_mail_b", verbose_name=_("Footer content"), blank=True)
+    footer_content = SimpleMailRichTextField(config_name="simple_mail_b", verbose_name=_("Footer"), blank=True)
     facebook_url = models.URLField(verbose_name=_("Facebook Url"), max_length=255, blank=True)
     twitter_url = models.URLField(verbose_name=_("Twitter Url"), max_length=255, blank=True)
     instagram_url = models.URLField(verbose_name=_("Instagram Url"), max_length=255, blank=True)
