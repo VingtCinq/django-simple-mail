@@ -12,7 +12,8 @@ SIMPLE_MAIL_CKEDITOR_CONFIGS = {
         'autoParagraph': False,
         'shiftEnterMode': 2,
         'enterMode': 2,
-        'entities': False
+        'entities': False,
+        'removeDialogTabs': 'link:advanced'
     },
     'simple_mail_p': {
         'toolbar': 'simple_mail_p',
@@ -25,7 +26,8 @@ SIMPLE_MAIL_CKEDITOR_CONFIGS = {
         'autoParagraph': False,
         'shiftEnterMode': 2,
         'enterMode': 1,
-        'entities': False
+        'entities': False,
+        'removeDialogTabs': 'link:advanced'
     }
 }
 

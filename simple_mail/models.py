@@ -11,13 +11,38 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from pilkit.processors import ResizeToFit
 from imagekit.models import ImageSpecField
-from solo.models import SingletonModel
 from simple_mail.fields import SimpleMailRichTextField
 from premailer import transform
 
 
+class SingletonModel(models.Model):
+    singleton_instance_id = 1
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.pk = self.singleton_instance_id
+        super(SingletonModel, self).save(*args, **kwargs)
+
+    @classmethod
+    def get_singleton(cls):
+        obj, created = cls.objects.get_or_create(pk=cls.singleton_instance_id)
+        return obj
+
+
 @python_2_unicode_compatible
 class SimpleMailConfig(SingletonModel):
+
+    TITLE_SIZE_H1 = 'h1'
+    TITLE_SIZE_H2 = 'h2'
+    TITLE_SIZE_H3 = 'h3'
+    TITLE_SIZE_CHOICES = (
+        (TITLE_SIZE_H1, 'h1'),
+        (TITLE_SIZE_H2, 'h2'),
+        (TITLE_SIZE_H3, 'h3'),
+    )
+
     # General
     base_url = models.URLField(verbose_name=_("Base url"), max_length=255, default="http://localhost:8000")
     from_email = models.EmailField(verbose_name=_("From Email"), max_length=255, default="webmaster@localhost")
@@ -32,23 +57,21 @@ class SimpleMailConfig(SingletonModel):
     website_url = models.URLField(verbose_name=_("Website Url"), max_length=255, blank=True)
     # Colors
     ## header
-    color_header_bg = models.CharField(verbose_name=_("Header background"), max_length=7, default="#FFFFFF")
-    color_header_container_bg = models.CharField(verbose_name=_("Header container background"), max_length=7, default="#F2F2F2")
-    color_title = models.CharField(verbose_name=_("Body title"), max_length=7, default="#444444")
+    color_header_bg = models.CharField(verbose_name=_("Header background"), max_length=7, default="#F7F7F7")
+    color_title = models.CharField(verbose_name=_("Body title"), max_length=7, default="#222222")
+    title_size = models.CharField(verbose_name=_("Title size"), max_length=2, choices=TITLE_SIZE_CHOICES, default=TITLE_SIZE_H1)
     ## body
-    color_body_container_bg = models.CharField(verbose_name=_("Body container background"), max_length=7, default="#F2F2F2")
     color_body_bg = models.CharField(verbose_name=_("Body background"), max_length=7, default="#FFFFFF")
-    color_body = models.CharField(verbose_name=_("Body Content"), max_length=7, default="#808080")
+    color_body = models.CharField(verbose_name=_("Body content"), max_length=7, default="#808080")
     color_body_link = models.CharField(verbose_name=_("Body links"), max_length=7, default="#007E9E")
     ## button
-    color_button = models.CharField(verbose_name=_("Button"), max_length=7, default="#FFFFFF")
+    color_button = models.CharField(verbose_name=_("Button content"), max_length=7, default="#FFFFFF")
     color_button_bg = models.CharField(verbose_name=_("Button background"), max_length=7, default="#00ADD8")
     border_radius_button = models.PositiveSmallIntegerField(verbose_name=_("Button border radius"), default=3)
     ## footer
-    color_footer = models.CharField(verbose_name=_("Footer"), max_length=7, default="#FFFFFF")
+    color_footer = models.CharField(verbose_name=_("Footer content"), max_length=7, default="#FFFFFF")
     color_footer_link = models.CharField(verbose_name=_("Footer Link"), max_length=7, default="#FFFFFF")
-    color_footer_bg = models.CharField(verbose_name=_("Footer background"), max_length=7, default="#555555")
-    color_footer_container_bg = models.CharField(verbose_name=_("Footer container background"), max_length=7, default="#F2F2F2")
+    color_footer_bg = models.CharField(verbose_name=_("Footer background"), max_length=7, default="#333333")
     color_footer_divider = models.CharField(verbose_name=_("Footer divider"), max_length=7, default="#505050")
 
     resized_logo = ImageSpecField(source='logo',
@@ -56,9 +79,11 @@ class SimpleMailConfig(SingletonModel):
                                   format='JPEG',
                                   options={'quality': 90})
 
-    COLOR_FIELDS = ['color_header_bg', 'color_header_container_bg', 'color_title', 'color_body_container_bg', 'color_body_bg',
-                    'color_body', 'color_body_link', 'color_button', 'color_button_bg', 'color_footer', 'color_footer_link',
-                    'color_footer_container_bg', 'color_footer_bg', 'color_footer_divider']
+    COLOR_FIELDS = ['color_header_bg', 'color_title', 'color_body_bg', 'color_body', 'color_body_link',
+                    'color_button', 'color_button_bg', 'color_footer', 'color_footer_link', 'color_footer_bg',
+                    'color_footer_divider']
+    
+    SIZING_FIELDS = ['border_radius_button', 'title_size']
 
     def __str__(self):
         return 'Simple Mail Configuration'
@@ -73,9 +98,8 @@ class SimpleMailConfig(SingletonModel):
             'instagram_url': self.instagram_url,
             'website_url': self.website_url,
             'color_header_bg': self.color_header_bg,
-            'color_header_container_bg': self.color_header_container_bg,
             'color_title': self.color_title,
-            'color_body_container_bg': self.color_body_container_bg,
+            'title_size': self.title_size,
             'color_body_bg': self.color_body_bg,
             'color_body': self.color_body,
             'color_body_link': self.color_body_link,
@@ -83,7 +107,6 @@ class SimpleMailConfig(SingletonModel):
             'color_button_bg': self.color_button_bg,
             'color_footer': self.color_footer,
             'color_footer_divider': self.color_footer_divider,
-            'color_footer_container_bg': self.color_footer_container_bg,
             'color_footer_link': self.color_footer_link,
             'color_footer_bg': self.color_footer_bg,
             'border_radius_button': self.border_radius_button,
@@ -93,15 +116,15 @@ class SimpleMailConfig(SingletonModel):
     def logo_url(self):
         if self.logo:
             return self.resized_logo.url
-        else:
-            return "http://placehold.it/392x168"
+        return None
 
     @property
     def from_(self):
         return "{from_name} <{from_email}>".format(from_name=self.from_name, from_email=self.from_email)
 
     class Meta:
-        verbose_name = 'Email Config'
+        verbose_name = 'Configuration'
+        verbose_name_plural = 'Configuration'
 
 
 @python_2_unicode_compatible
@@ -111,10 +134,16 @@ class SimpleMail(models.Model):
     """
     key = models.CharField(verbose_name=_("Email Key"), editable=False, max_length=20, unique=True)
     subject = models.CharField(max_length=255, verbose_name=_("Subject"))
-    title = models.CharField(max_length=255, verbose_name=_("Title"))
+    title = models.CharField(max_length=255, verbose_name=_("Title"), blank=True)
     body = SimpleMailRichTextField(config_name="simple_mail_p", verbose_name=_("Content"))
+    banner = models.ImageField(verbose_name=_("Banner"), upload_to="simple_mail", blank=True, null=True)
     button_label = models.CharField(verbose_name=_("Button label"), max_length=80, blank=True)
     button_link = models.CharField(verbose_name=_("Button Link"), max_length=255, blank=True)
+
+    resized_banner = ImageSpecField(source='banner',
+                                    processors=[ResizeToFit(1128, None)],
+                                    format='JPEG',
+                                    options={'quality': 90})
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name=_("Updated at"), auto_now=True)
@@ -122,25 +151,32 @@ class SimpleMail(models.Model):
     def __str__(self):
         return self.key
 
+    @property
+    def banner_url(self):
+        if self.banner:
+            return self.resized_banner.url
+        return None
+
     class Meta:
         verbose_name = 'Email'
         verbose_name_plural = 'Emails'
 
     def render(self, context={}, template=None):
-        config = SimpleMailConfig.get_solo()
+        config = SimpleMailConfig.get_singleton()
         base_context = config.context
         base_context.update(context)
         subject = Template(self.subject).render(Context(base_context))
         base_context.update({
             'title': Template(self.title).render(Context(base_context)),
             'subject': subject,
+            'banner_url': self.banner_url,
             'footer_content': Template(base_context.get('footer_content')).render(Context(base_context)),
             'button_label': Template(self.button_label).render(Context(base_context)),
             'button_link': Template(self.button_link).render(Context(base_context)),
             'body': Template(self.body).render(Context(base_context)),
         })
         if template is None:
-            template = getattr(settings, 'SIMPLE_MAIL_DEFAULT_TEMPLATE', 'simple_mail/alpha.html')
+            template = getattr(settings, 'SIMPLE_MAIL_DEFAULT_TEMPLATE', 'simple_mail/default.html')
         html = loader.render_to_string(template, base_context)
         html = transform(html, base_url=config.base_url)
         h = html2text.HTML2Text()

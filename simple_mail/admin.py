@@ -1,5 +1,7 @@
+from functools import update_wrapper
+
+from django import forms
 from django.contrib import admin, messages
-from simple_mail.models import SimpleMail, SimpleMailConfig
 from django.contrib import admin
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -7,17 +9,18 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.admin.utils import unquote
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.utils.html import escape
-from django.urls import path, reverse
+from django.urls import reverse
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.admin.options import IS_POPUP_VAR
 from django.template.response import TemplateResponse
+from django.views.generic import RedirectView
+
 
 from simple_mail.forms import AdminSendTestMailForm
-from solo.admin import SingletonModelAdmin
+from simple_mail.models import SimpleMail, SimpleMailConfig
 
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
 
-from django import forms
 
 class ColorInput(forms.widgets.Input):
     input_type = 'color'
@@ -37,9 +40,7 @@ class SimpleMailConfigAdminForm(forms.ModelForm):
         exclude = []
 
 
-class SimpleMailConfigAdmin(SingletonModelAdmin):
-    # we override `change_form_template` to fix a pending feature request
-    change_form_template = 'admin/simple_mail/change_form_solo.html'
+class SimpleMailConfigAdmin(admin.ModelAdmin):
     fieldsets = (
         ('General', {
             'fields': ('base_url', 'from_email', 'from_name',)
@@ -50,12 +51,62 @@ class SimpleMailConfigAdmin(SingletonModelAdmin):
         ('Footer', {
             'fields': ('footer_content', 'facebook_url', 'twitter_url', 'instagram_url', 'website_url',)
         }),
-        ('Design', {
-            'fields': ('color_header_container_bg', 'color_header_bg', 'color_body_container_bg', 'color_body_bg', 'color_title', 'color_body', 'color_body_link', 'color_button', 'color_button_bg', 'border_radius_button', 'color_footer_container_bg', 'color_footer_bg', 'color_footer', 'color_footer_link', 'color_footer_divider', ),
+        ('Colors', {
+            'fields': SimpleMailConfig.COLOR_FIELDS,
+            'classes': ('wide',)
+        }),
+        ('Sizings', {
+            'fields': SimpleMailConfig.SIZING_FIELDS,
             'classes': ('wide',)
         }),
     )
     form = SimpleMailConfigAdminForm
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_urls(self):
+        
+        from django.urls import path
+
+        def wrap(view):
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            wrapper.model_admin = self
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.model_name
+
+        urlpatterns = [
+            path('', wrap(RedirectView.as_view(
+                pattern_name='%s:%s_%s_change' % ((self.admin_site.name,) + info)
+            )), name='%s_%s_changelist' % info),
+            path('history/', wrap(self.history_view), {'object_id': str(self.singleton_instance_id)}, name='%s_%s_history' % info),
+            path('change/', wrap(self.change_view), {'object_id': str(self.singleton_instance_id)}, name='%s_%s_change' % info),
+        ]
+        return urlpatterns + super().get_urls()
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        if object_id == str(self.singleton_instance_id):
+            self.model.objects.get_or_create(pk=self.singleton_instance_id)
+        return super(SimpleMailConfigAdmin, self).change_view(
+            request,
+            object_id,
+            form_url=form_url,
+            extra_context=extra_context,
+        )
+    
+    def response_post_save_change(self, request, obj):
+        post_url = reverse('%s:app_list' % self.admin_site.name, args=(self.model._meta.app_label,))
+        return HttpResponseRedirect(post_url)
+
+    @property
+    def singleton_instance_id(self):
+        return getattr(self.model, 'singleton_instance_id')
+
 
 admin.site.register(SimpleMailConfig, SimpleMailConfigAdmin)
 
@@ -151,11 +202,12 @@ class SimpleMailAdmin(admin.ModelAdmin):
         return TemplateResponse(
             request,
             self.simplemail_send_test_mail_template or
-            'admin/simple_mail/send_test_mail.html',
+            'admin/simple_mail/simplemail/send_test_mail.html',
             context,
         )
 
     def get_urls(self):
+        from django.urls import path
         return [
             path(
                 '<id>/send-test-mail/',

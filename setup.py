@@ -54,8 +54,6 @@ setup(
         'premailer>=3.2.0',
         'Pillow>=5.2.0',
         'django-imagekit>=4.0.2',
-        'django-solo>=1.1.3',
-        'django-ckeditor>=5.6.1',
         'six>=1.11.0',
     ],
     # test_suite='tests',

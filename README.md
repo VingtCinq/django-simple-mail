@@ -3,14 +3,33 @@
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
 # django-simple-mail
+
 Simple customizable email template built for Django
 
+The 2.* version have breacking changes from the 1.* and are not backward compatible.
+
+## Template preview
+
+The base template was built with [Mailchimp](https://mailchimp.com/) editor :
+
+![Email Preview](docs/preview.png)
+
+
+## Mail configuration & edition
+
+Customize your base content and template colors :
+
+![Admin mail configuration](docs/admin-mail-template-configuration.png)
+
+Edit the content of each of your mail :
+
+![Admin mail edition](docs/admin-mail-edition.png)
 
 ## Requirements
 
 These Django app works with :
 
-+ Python (>=2.7) (Need to be tested for 3.x)
++ Python (>=2.7)
 + Django (>=1.9) (Need to be tested for previous versions)
 
 
@@ -20,19 +39,12 @@ Install using `pip` :
 
 `pip install django_simple_mail`
 
-Simple mail depend on two other apps :
-
-+ `solo` to allow email template configuration directly in Django's admin
-+ `ckeditor` to allow WYSIWYG for email content edition
-
-Add `simple_mail`, `solo` and `ckeditor` to your INSTALLED_APPS setting.
+Add `simple_mail` to your INSTALLED_APPS setting.
 
 ```python
 INSTALLED_APPS = (
     ...
     'simple_mail',
-    'solo',
-    'ckeditor',
     ...
 )
 ```
@@ -41,12 +53,33 @@ Then run :
 
 `python manage.py migrate`
 
+## WYSIWYG
 
-## Register mails
+Simple Mail easily integrates with `django-ckeditor` to have a wysiwyg edition of content.
+To use it :
+
+`pip install django-ckeditor`
+
+Then add `ckeditor` to your INSTALLED_APPS setting.
+
+```python
+INSTALLED_APPS = (
+    ...
+    'ckeditor',
+    ...
+)
+```
+
+And set the following setting :
+
+`SIMPLE_MAIL_USE_CKEDITOR = True`
+
+
+## Create and Register mails
 
 Create a `mails.py` file in your app and define your mail :
 
-```
+```python
 from simple_mail.mailer import BaseSimpleMail, simple_mailer
 
 
@@ -59,37 +92,44 @@ simple_mailer.register(WelcomeMail)
 
 Then run `./manage.py register_mails` to create those mail into the database.
 
+The mail with key `welcome` will he be available for edition in your django admin.
+
 ## Send an email
 
 You can the send the `WelcomeEmail` the following way :
 
-```
+```python
 welcome_email = WelcomeEmail()
 welcome_email.set_context(args, kwargs)
 welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
                    headers={}, cc=[], reply_to=[], fail_silently=False)
 ```
 
-## Preview and customization:
+## custom template Customization:
 
-Three mail templates are available. They were built with [Mailchimp](https://mailchimp.com/) editor and looks like this with placeholder values:
+You can define your own email template :
 
-### Alpha
+By setting a `template` attribute from you `BaseSimpleMail`subclass :
 
-![Email Preview](docs/preview-alpha.png)
+```python
+from simple_mail.mailer import BaseSimpleMail, simple_mailer
 
 
-## Django Admin
+class WelcomeMail(BaseSimpleMail):
+    email_key = 'welcome'
+    template = 'my_app/my_email_template.html'
 
-You can customize the colors and base content of your template directly inside the admin.
 
-You can manage your emails and their content directly from django admin :
+simple_mailer.register(WelcomeMail)
 
-![Admin Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin.png)
+```
 
-You can also use variables inside the fields to make your content more dynamic :
+Or by setting `SIMPLE_MAIL_DEFAULT_TEMPLATE` in your settings :
 
-![Admin Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin-context.png)
+```python
+SIMPLE_MAIL_DEFAULT_TEMPLATE = 'my_app/my_email_template.html'
+
+```
 
 
 ## Support

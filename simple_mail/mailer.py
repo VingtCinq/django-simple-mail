@@ -73,7 +73,16 @@ class SimpleMailer(object):
             if created:
                 created_mails.append(value)
         return created_mails
-
+    
+    def delete_mails(self):
+        from simple_mail.models import SimpleMail
+        mails = SimpleMail.objects.all()
+        deleted_mails = []
+        for mail in mails:
+            if mail.key not in self._registry:
+                deleted_mails.append(mail.key)
+                mail.delete()
+        return deleted_mails
 
 simple_mailer = SimpleMailer()
 
