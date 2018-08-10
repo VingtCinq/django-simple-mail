@@ -16,7 +16,7 @@ The base template was built with [Mailchimp](https://mailchimp.com/) editor :
 
 ## Requirements
 
-These Django app works with :
+This Django app works with :
 
 + Python (>=2.7)
 + Django (>=1.9) (Need to be tested for previous versions)
@@ -107,7 +107,7 @@ class WelcomeMail(BaseSimpleMail):
     email_key = 'welcome'
     context = {
         'title' : 'My email title',
-        'user': the user
+        'user': 'the user'
     }
 
 
@@ -125,7 +125,7 @@ class WelcomeMail(BaseSimpleMail):
 
     def set_context(self, user_id, welcome_link):
         user = User.objects.get(id=user_id)
-        return {
+        self.context = {
             'user': user,
             'welcome_link': welcome_link
         }
