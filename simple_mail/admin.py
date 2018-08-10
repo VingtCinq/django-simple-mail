@@ -134,7 +134,6 @@ class SimpleMailAdmin(admin.ModelAdmin):
                 'value': v,
                 'type': type(v).__name__
             })
-        print(res)
         return loader.render_to_string('admin/simple_mail/simplemail/context.html', {'context': res})
 
     available_context.short_description = 'Available Context'
