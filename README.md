@@ -87,11 +87,11 @@ The mail with key `welcome` will he be available for edition in your django admi
 
 ### Send an email
 
-You can the send the `WelcomeEmail` the following way :
+You can the send the `WelcomeMail` the following way :
 
 ```python
-welcome_email = WelcomeEmail()
-welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
+welcome_mail = WelcomeMail()
+welcome_mail.send(to, from_email=None, bcc=[], connection=None, attachments=[],
                    headers={}, cc=[], reply_to=[], fail_silently=False)
 ```
 
@@ -137,9 +137,9 @@ simple_mailer.register(WelcomeMail)
 You will then need to call the `set_context` before sending an email:
 
 ```python
-welcome_email = WelcomeEmail()
-welcome_email.set_context(user_id, welcome_link)
-welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
+welcome_mail = WelcomeMail()
+welcome_mail.set_context(user_id, welcome_link)
+welcome_mail.send(to, from_email=None, bcc=[], connection=None, attachments=[],
                    headers={}, cc=[], reply_to=[], fail_silently=False)
 ```
 
