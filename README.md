@@ -1,4 +1,4 @@
-[![django-simple-mail v2.0.3 on PyPi](https://img.shields.io/badge/pypi-2.0.3-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v2.0.4 on PyPi](https://img.shields.io/badge/pypi-2.0.4-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -12,7 +12,7 @@ The 2.* versions have breaking changes from the 1.* and are not backward compati
 
 The base template was built with [Mailchimp](https://mailchimp.com/) editor :
 
-![Email Preview](docs/preview.png)
+![Email Preview](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/preview.png)
 
 ## Requirements
 
@@ -184,14 +184,14 @@ This method impact the fields displayed in the **Context** section of the admin.
 You change the look and feel or your template directly from the django admin :
 The **Footer** field can use template tags and variables.
 
-![Admin mail configuration](docs/admin-mail-template-configuration.png)
+![Admin mail configuration](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin-mail-template-configuration.png)
 
 ### Edit the content of each of your mail :
 
 You can edit the content of each of your mail.
 The **Content**, **Subject**, **button label** and **button link** fields can use template tags and variables.
 
-![Admin mail edition](docs/admin-mail-edition.png)
+![Admin mail edition](https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin-mail-edition.png)
 
 ## Custom template
 

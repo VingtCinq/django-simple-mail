@@ -1,4 +1,4 @@
-|django-simple-mail v2.0.3 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.0.4 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -14,7 +14,7 @@ Template preview
 The base template was built with `Mailchimp <https://mailchimp.com/>`__
 editor :
 
-.. figure:: docs/preview.png
+.. figure:: https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/preview.png
    :alt: Email Preview
 
    Email Preview
@@ -201,7 +201,7 @@ Customize your base content and template colors
 You change the look and feel or your template directly from the django
 admin : The **Footer** field can use template tags and variables.
 
-.. figure:: docs/admin-mail-template-configuration.png
+.. figure:: https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin-mail-template-configuration.png
    :alt: Admin mail configuration
 
    Admin mail configuration
@@ -213,7 +213,7 @@ You can edit the content of each of your mail. The **Content**,
 **Subject**, **button label** and **button link** fields can use
 template tags and variables.
 
-.. figure:: docs/admin-mail-edition.png
+.. figure:: https://raw.githubusercontent.com/charlesthk/django-simple-mail/master/docs/admin-mail-edition.png
    :alt: Admin mail edition
 
    Admin mail edition
@@ -254,7 +254,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.0.3 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.3-green.svg
+.. |django-simple-mail v2.0.4 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.4-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
