@@ -164,12 +164,12 @@ class SimpleMail(models.Model):
     def render(self, context={}, template=None):
         config = SimpleMailConfig.get_singleton()
         base_context = config.context
+        base_context['banner_url'] = self.banner_url
         base_context.update(context)
         subject = Template(self.subject).render(Context(base_context))
         base_context.update({
             'title': Template(self.title).render(Context(base_context)),
             'subject': subject,
-            'banner_url': self.banner_url,
             'footer_content': Template(base_context.get('footer_content')).render(Context(base_context)),
             'button_label': Template(self.button_label).render(Context(base_context)),
             'button_link': Template(self.button_link).render(Context(base_context)),

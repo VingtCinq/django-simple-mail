@@ -14,7 +14,6 @@ class BaseSimpleMail(object):
 
     email_key = None
     template = None
-    test_context = {}
     context = {}
 
     def __init__(self, *args, **kwargs):
@@ -22,33 +21,29 @@ class BaseSimpleMail(object):
             raise ImproperlyConfigured('%s must have an `email_key` property.' % self.__class__.__name__)
         super(BaseSimpleMail, self).__init__(*args, **kwargs)
 
-    def get_test_context(self):
-        return self.test_context
-
-    def get_context(self, *args, **kwargs):
-        return self.test_context
+    def set_test_context(self):
+        pass
     
     def set_context(self, *args, **kwargs):
-        self.context = self.get_context(*args, **kwargs)
+        pass
 
-    def get_mail(self):
+    @classmethod
+    def get_mail(cls):
         from simple_mail.models import SimpleMail
-        return SimpleMail.objects.get(key=self.email_key)
+        return SimpleMail.objects.get(key=cls.email_key)
 
-    def render(self, context={}):
+    def render(self):
         mail = self.get_mail()
-        return mail.render(context, self.template)
+        return mail.render(self.context, self.template)
 
     def send_test_mail(self, to):
         mail = self.get_mail()
-        context = self.get_test_context()
-        return mail.send(to, context, self.template)
+        return mail.send(to, self.context, self.template)
 
     def send(self, to, from_email=None, bcc=[],
              connection=None, attachments=[], headers={}, cc=[], reply_to=[], fail_silently=False):
         mail = self.get_mail()
-        context = self.get_context()
-        return mail.send(to, context, self.template, from_email, bcc,
+        return mail.send(to, self.context, self.template, from_email, bcc,
                               connection, attachments, headers, cc, reply_to, fail_silently)
         
 

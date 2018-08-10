@@ -3,6 +3,7 @@ from functools import update_wrapper
 from django import forms
 from django.contrib import admin, messages
 from django.contrib import admin
+from django.template import loader
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.core.exceptions import PermissionDenied
@@ -116,11 +117,41 @@ class SimpleMailAdmin(admin.ModelAdmin):
         Admin View for Mail
     '''
     list_display = ('key', 'subject',)
-    readonly_fields = ('key',)
+    readonly_fields = ('key', 'created_at', 'updated_at', 'available_context',)
     send_test_mail_form = AdminSendTestMailForm
 
     simplemail_send_test_mail_template = None
     simplemail_preview_mail_template = None
+
+    def available_context(self, obj):
+        from simple_mail.mailer import simple_mailer
+        test_mail = simple_mailer._registry.get(obj.key)()
+        test_mail.set_test_context()
+        res = []
+        for k, v in test_mail.context.items():
+            res.append({
+                'key': k,
+                'value': v,
+                'type': type(v).__name__
+            })
+        print(res)
+        return loader.render_to_string('admin/simple_mail/simplemail/context.html', {'context': res})
+
+    available_context.short_description = 'Available Context'
+
+    fieldsets = (
+        ('Content', {
+            'fields': ('subject', 'title', 'body', 'banner', 'button_label', 'button_link'),
+        }),
+        ('Context', {
+            'fields': ('available_context',),
+            'classes': ('collapse',),
+        }),       
+        ('Metadata', {
+            'fields': ('key', 'created_at', 'updated_at',),
+            'classes': ('collapse',),
+        }),
+    )
 
     def has_add_permission(self, *args, **kwargs):
         return False
@@ -138,8 +169,9 @@ class SimpleMailAdmin(admin.ModelAdmin):
                 'key': escape(id),
             })
         from simple_mail.mailer import simple_mailer
-        test_mail = simple_mailer._registry.get(mail.key)
-        html = test_mail().render().get('html_message')
+        test_mail = simple_mailer._registry.get(mail.key)()
+        test_mail.set_test_context()
+        html = test_mail.render().get('html_message')
         return HttpResponse(html)
 
 
@@ -158,8 +190,9 @@ class SimpleMailAdmin(admin.ModelAdmin):
             if form.is_valid():
                 from simple_mail.mailer import simple_mailer
                 email = form.cleaned_data.get('email')
-                test_mail = simple_mailer._registry.get(mail.key)
-                test_mail().send_test_mail([email])
+                test_mail = simple_mailer._registry.get(mail.key)()
+                test_mail.set_test_context()
+                test_mail.send_test_mail([email])
                 msg = gettext('Test mail successfully sent.')
                 messages.success(request, msg)
                 return HttpResponseRedirect(

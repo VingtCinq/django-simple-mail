@@ -64,7 +64,9 @@ And set the following in your settings :
 `SIMPLE_MAIL_USE_CKEDITOR = True`
 
 
-## Create and Register mails
+## Create, register and send mails
+
+### Register Mail
 
 Create a `mails.py` file in your app and define your mail :
 
@@ -83,16 +85,97 @@ Then run `./manage.py register_mails` to create those mail into the database.
 
 The mail with key `welcome` will he be available for edition in your django admin.
 
-## Send an email
+### Send an email
 
 You can the send the `WelcomeEmail` the following way :
 
 ```python
 welcome_email = WelcomeEmail()
-welcome_email.set_context(args, kwargs)
 welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
                    headers={}, cc=[], reply_to=[], fail_silently=False)
 ```
+
+### Passing variables to email
+
+You can pass variable to email with the `context` attribute :
+
+```python
+from simple_mail.mailer import BaseSimpleMail, simple_mailer
+
+
+class WelcomeMail(BaseSimpleMail):
+    email_key = 'welcome'
+    context = {
+        'title' : 'My email title',
+        'user': the user
+    }
+
+
+simple_mailer.register(WelcomeMail)
+```
+
+Or you can create a `set_context` method:
+
+```python
+from simple_mail.mailer import BaseSimpleMail, simple_mailer
+
+
+class WelcomeMail(BaseSimpleMail):
+    email_key = 'welcome'
+
+    def set_context(self, user_id, welcome_link):
+        user = User.objects.get(id=user_id)
+        return {
+            'user': user,
+            'welcome_link': welcome_link
+        }
+
+
+simple_mailer.register(WelcomeMail)
+```
+
+You will then need to call the `set_context` before sending an email:
+
+```python
+welcome_email = WelcomeEmail()
+welcome_email.set_context(user_id, welcome_link)
+welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
+                   headers={}, cc=[], reply_to=[], fail_silently=False)
+```
+
+## Email preview and test email
+
+From the admin you can preview an email and send a test email.
+
+Both methods use your `context` attribute to render the email.
+
+If you use the `set_context` method, you might need to create a `set_test_context` method.
+
+This method should not take any argument :
+
+```python
+from simple_mail.mailer import BaseSimpleMail, simple_mailer
+
+
+class WelcomeMail(BaseSimpleMail):
+    email_key = 'welcome'
+
+    def set_context(self, user_id, welcome_link):
+        user = User.objects.get(id=user_id)
+        self.context = {
+            'user': user,
+            'welcome_link': welcome_link
+        }
+    
+    def set_test_context(self):
+        user_id = User.objects.order_by('?').first().id
+        self.set_context(user_id, 'http://my-webiste.com/my-path')
+
+
+simple_mailer.register(WelcomeMail)
+```
+
+This method impact the fields displayed in the **Context** section of the admin.
 
 ## Mail configuration & edition
 

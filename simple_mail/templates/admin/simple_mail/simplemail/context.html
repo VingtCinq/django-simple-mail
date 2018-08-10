@@ -1,0 +1,20 @@
+{% if context %}
+<table>
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for obj in context %}
+        <tr>
+            <td>{{obj.key}}</td>
+            <td>{{obj.value}}</td>
+            <td>{{obj.type}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
