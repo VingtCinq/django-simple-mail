@@ -1,4 +1,4 @@
-[![django-simple-mail v2.0.5 on PyPi](https://img.shields.io/badge/pypi-2.0.5-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v2.0.6 on PyPi](https://img.shields.io/badge/pypi-2.0.6-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -21,6 +21,10 @@ This Django app works with :
 + Python (>=2.7)
 + Django (>=1.9) (Need to be tested for previous versions)
 
+## Todo
+
++ Write tests
++ validate compatibility with previous versions of Django and Python
 
 ## Installation
 

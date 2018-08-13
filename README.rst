@@ -1,4 +1,4 @@
-|django-simple-mail v2.0.5 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.0.6 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -26,6 +26,12 @@ This Django app works with :
 
 -  Python (>=2.7)
 -  Django (>=1.9) (Need to be tested for previous versions)
+
+Todo
+----
+
+-  Write tests
+-  validate compatibility with previous versions of Django and Python
 
 Installation
 ------------
@@ -254,7 +260,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.0.5 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.5-green.svg
+.. |django-simple-mail v2.0.6 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.6-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
