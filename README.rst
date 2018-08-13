@@ -1,4 +1,4 @@
-|django-simple-mail v2.0.4 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.0.5 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -22,7 +22,7 @@ editor :
 Requirements
 ------------
 
-These Django app works with :
+This Django app works with :
 
 -  Python (>=2.7)
 -  Django (>=1.9) (Need to be tested for previous versions)
@@ -98,12 +98,12 @@ django admin.
 Send an email
 ~~~~~~~~~~~~~
 
-You can the send the ``WelcomeEmail`` the following way :
+You can the send the ``WelcomeMail`` the following way :
 
 .. code:: python
 
-    welcome_email = WelcomeEmail()
-    welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
+    welcome_mail = WelcomeMail()
+    welcome_mail.send(to, from_email=None, bcc=[], connection=None, attachments=[],
                        headers={}, cc=[], reply_to=[], fail_silently=False)
 
 Passing variables to email
@@ -120,7 +120,7 @@ You can pass variable to email with the ``context`` attribute :
         email_key = 'welcome'
         context = {
             'title' : 'My email title',
-            'user': the user
+            'user': 'the user'
         }
 
 
@@ -138,7 +138,7 @@ Or you can create a ``set_context`` method:
 
         def set_context(self, user_id, welcome_link):
             user = User.objects.get(id=user_id)
-            return {
+            self.context = {
                 'user': user,
                 'welcome_link': welcome_link
             }
@@ -150,9 +150,9 @@ You will then need to call the ``set_context`` before sending an email:
 
 .. code:: python
 
-    welcome_email = WelcomeEmail()
-    welcome_email.set_context(user_id, welcome_link)
-    welcome_email.send(to, from_email=None, bcc=[], connection=None, attachments=[],
+    welcome_mail = WelcomeMail()
+    welcome_mail.set_context(user_id, welcome_link)
+    welcome_mail.send(to, from_email=None, bcc=[], connection=None, attachments=[],
                        headers={}, cc=[], reply_to=[], fail_silently=False)
 
 Email preview and test email
@@ -254,7 +254,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.0.4 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.4-green.svg
+.. |django-simple-mail v2.0.5 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.5-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
