@@ -35,7 +35,7 @@ SIMPLE_MAIL_CKEDITOR_CONFIGS = {
 class SimpleMailCKEditorWidget(CKEditorWidget):
 
     def __init__(self, config_name='default', extra_plugins=None, external_plugin_resources=None, *args, **kwargs):
-        super(SimpleMailCKEditorWidget, self).__init__(*args, **kwargs)
+        super(CKEditorWidget, self).__init__(*args, **kwargs)
         # Setup config from defaults.
         self.config = DEFAULT_CONFIG.copy()
 
