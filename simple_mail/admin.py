@@ -15,7 +15,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.admin.options import IS_POPUP_VAR
 from django.template.response import TemplateResponse
 from django.views.generic import RedirectView
-
+from django.conf import settings
 
 from simple_mail.forms import AdminSendTestMailForm
 from simple_mail.models import SimpleMail, SimpleMailConfig
@@ -33,6 +33,12 @@ def get_widgets():
         widgets[field] = ColorInput
     return widgets
 
+if getattr(settings, 'SIMPLE_MAIL_USE_MODELTRANSALTIONS', False):
+    from modeltranslation.admin import TranslationAdmin
+    modelAdminClass = TranslationAdmin
+else:
+    modelAdminClass = admin.ModelAdmin
+
 
 class SimpleMailConfigAdminForm(forms.ModelForm):
     class Meta:
@@ -40,8 +46,7 @@ class SimpleMailConfigAdminForm(forms.ModelForm):
         widgets = get_widgets()
         exclude = []
 
-
-class SimpleMailConfigAdmin(admin.ModelAdmin):
+class SimpleMailConfigAdmin(modelAdminClass):
     fieldsets = (
         ('General', {
             'fields': ('base_url', 'from_email', 'from_name',)
@@ -112,7 +117,7 @@ class SimpleMailConfigAdmin(admin.ModelAdmin):
 admin.site.register(SimpleMailConfig, SimpleMailConfigAdmin)
 
 
-class SimpleMailAdmin(admin.ModelAdmin):
+class SimpleMailAdmin(modelAdminClass):
     '''
         Admin View for Mail
     '''

@@ -1,4 +1,4 @@
-|django-simple-mail v2.0.7 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.1.0 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -32,6 +32,7 @@ Todo
 
 -  Write tests
 -  validate compatibility with previous versions of Django and Python
+-  Set a demo app on pythonanywhere
 
 Installation
 ------------
@@ -54,8 +55,11 @@ Then run :
 
 ``python manage.py migrate``
 
-WYSIWYG
-~~~~~~~
+Integrations
+------------
+
+CKEDITOR for a WYSIWYG edition of contents
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Simple Mail easily integrates with ``django-ckeditor`` to have a wysiwyg
 edition of content. To use it :
@@ -75,6 +79,32 @@ Then add ``ckeditor`` to your INSTALLED_APPS settings.
 And set the following in your settings :
 
 ``SIMPLE_MAIL_USE_CKEDITOR = True``
+
+ModelTranslation to translate emails
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Simple Mail easily integrates with ``django-modeltranslation`` to get
+the content of your emails available in multiple languages.
+
+``pip install django-modeltranslation``
+
+Then add ``modeltranslation`` to your INSTALLED_APPS settings.
+
+.. code:: python
+
+    INSTALLED_APPS = (
+        ...
+        'modeltranslation',
+        ...
+    )
+
+And set the following in your settings :
+
+``SIMPLE_MAIL_USE_MODELTRANSALTIONS = True``
+
+And run :
+
+``python manage.py sync_translation_fields``
 
 Create, register and send mails
 -------------------------------
@@ -260,7 +290,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.0.7 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.7-green.svg
+.. |django-simple-mail v2.1.0 on PyPi| image:: https://img.shields.io/badge/pypi-2.1.0-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
