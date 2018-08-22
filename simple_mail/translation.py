@@ -1,6 +1,6 @@
 from django.conf import settings
 
-if getattr(settings, 'SIMPLE_MAIL_USE_MODELTRANSALTIONS', False):
+if getattr(settings, 'SIMPLE_MAIL_USE_MODELTRANSALTION', False):
     from modeltranslation.translator import translator, TranslationOptions
     from simple_mail.models import SimpleMailConfig, SimpleMail
 

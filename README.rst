@@ -1,4 +1,4 @@
-|django-simple-mail v2.1.0 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.1.1 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -100,7 +100,7 @@ Then add ``modeltranslation`` to your INSTALLED_APPS settings.
 
 And set the following in your settings :
 
-``SIMPLE_MAIL_USE_MODELTRANSALTIONS = True``
+``SIMPLE_MAIL_USE_MODELTRANSALTION = True``
 
 And run :
 
@@ -290,7 +290,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.1.0 on PyPi| image:: https://img.shields.io/badge/pypi-2.1.0-green.svg
+.. |django-simple-mail v2.1.1 on PyPi| image:: https://img.shields.io/badge/pypi-2.1.1-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

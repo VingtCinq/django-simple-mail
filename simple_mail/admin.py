@@ -33,7 +33,7 @@ def get_widgets():
         widgets[field] = ColorInput
     return widgets
 
-if getattr(settings, 'SIMPLE_MAIL_USE_MODELTRANSALTIONS', False):
+if getattr(settings, 'SIMPLE_MAIL_USE_MODELTRANSALTION', False):
     from modeltranslation.admin import TranslationAdmin
     modelAdminClass = TranslationAdmin
 else:
