@@ -215,24 +215,24 @@ class SimpleMailAdmin(modelAdminClass):
         fieldsets = [(None, {'fields': list(form.base_fields)})]
         adminForm = admin.helpers.AdminForm(form, fieldsets, {})
 
-        context = {
-            'title': _('Send test mail: %s') % escape(mail.key),
-            'adminForm': adminForm,
-            'form_url': form_url,
-            'form': form,
-            'is_popup': (IS_POPUP_VAR in request.POST or
+        context = dict(
+            self.admin_site.each_context(request),
+            title= _('Send test mail: %s') % escape(mail.key),
+            adminForm= adminForm,
+            form_url= form_url,
+            form= form,
+            is_popup= (IS_POPUP_VAR in request.POST or
                          IS_POPUP_VAR in request.GET),
-            'add': True,
-            'change': False,
-            'has_delete_permission': False,
-            'has_change_permission': True,
-            'has_absolute_url': False,
-            'opts': self.model._meta,
-            'original': mail,
-            'save_as': False,
-            'show_save': True,
-            **self.admin_site.each_context(request),
-        }
+            add= True,
+            change= False,
+            has_delete_permission= False,
+            has_change_permission= True,
+            has_absolute_url= False,
+            opts= self.model._meta,
+            original= mail,
+            save_as= False,
+            show_save= True,
+        )
 
         request.current_app = self.admin_site.name
 
