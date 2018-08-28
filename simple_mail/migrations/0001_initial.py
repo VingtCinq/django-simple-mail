@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='SimpleMail',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('key', models.CharField(editable=False, max_length=20, unique=True, verbose_name='Email Key')),
+                ('key', models.CharField(editable=False, max_length=100, unique=True, verbose_name='Email Key')),
                 ('subject', models.CharField(max_length=255, verbose_name='Subject')),
                 ('title', models.CharField(blank=True, max_length=255, verbose_name='Title')),
                 ('body', simple_mail.fields.SimpleMailRichTextField(verbose_name='Content')),

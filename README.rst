@@ -1,4 +1,4 @@
-|django-simple-mail v2.1.1 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.1.2 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -112,7 +112,9 @@ Create, register and send mails
 Register Mail
 ~~~~~~~~~~~~~
 
-Create a ``mails.py`` file in your app and define your mail :
+Create a ``mails.py`` file in your app and define your mail.
+
+The ``email_key`` attribute must not exceed 100 characters.
 
 .. code:: python
 
@@ -290,7 +292,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.1.1 on PyPi| image:: https://img.shields.io/badge/pypi-2.1.1-green.svg
+.. |django-simple-mail v2.1.2 on PyPi| image:: https://img.shields.io/badge/pypi-2.1.2-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

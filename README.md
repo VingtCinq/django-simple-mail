@@ -1,4 +1,4 @@
-[![django-simple-mail v2.1.1 on PyPi](https://img.shields.io/badge/pypi-2.1.1-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v2.1.2 on PyPi](https://img.shields.io/badge/pypi-2.1.2-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -99,7 +99,9 @@ And run :
 
 ### Register Mail
 
-Create a `mails.py` file in your app and define your mail :
+Create a `mails.py` file in your app and define your mail.
+
+The `email_key` attribute must not exceed 100 characters.
 
 ```python
 from simple_mail.mailer import BaseSimpleMail, simple_mailer

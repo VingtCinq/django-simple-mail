@@ -132,7 +132,7 @@ class SimpleMail(models.Model):
     """
     Define an email
     """
-    key = models.CharField(verbose_name=_("Email Key"), editable=False, max_length=20, unique=True)
+    key = models.CharField(verbose_name=_("Email Key"), editable=False, max_length=100, unique=True)
     subject = models.CharField(max_length=255, verbose_name=_("Subject"))
     title = models.CharField(max_length=255, verbose_name=_("Title"), blank=True)
     body = SimpleMailRichTextField(config_name="simple_mail_p", verbose_name=_("Content"))
