@@ -1,4 +1,4 @@
-[![django-simple-mail v2.1.2 on PyPi](https://img.shields.io/badge/pypi-2.1.2-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v2.2.0 on PyPi](https://img.shields.io/badge/pypi-2.2.0-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -6,7 +6,10 @@
 
 Simple customizable email template built for Django
 
-The 2.* versions have breaking changes from the 1.* and are not backward compatible.
+# Changelog
+
++ In the 2.2.* version the following fields `from_email`, `from_name` and `base_url` where removed. Those parameters should be defined in code rather than from the admin. 
++ The 2.* versions have breaking changes from the 1.* and are not backward compatible.
 
 ## Template preview
 
@@ -46,6 +49,22 @@ INSTALLED_APPS = (
 Then run :
 
 `python manage.py migrate`
+
+
+Quoting Django's documentation :
+
+> Mail is sent using the SMTP host and port specified in the `EMAIL_HOST` and `EMAIL_PORT` settings. The `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD` settings, if set, are used to authenticate to the SMTP server, and the `EMAIL_USE_TLS` and `EMAIL_USE_SSL` settings control whether a secure connection is used.
+
+So you need to set the following
+
+```
+EMAIL_HOST = ''
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+```
 
 ## Integrations
 

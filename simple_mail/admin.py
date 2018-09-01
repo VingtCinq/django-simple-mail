@@ -48,9 +48,6 @@ class SimpleMailConfigAdminForm(forms.ModelForm):
 
 class SimpleMailConfigAdmin(modelAdminClass):
     fieldsets = (
-        ('General', {
-            'fields': ('base_url', 'from_email', 'from_name',)
-        }),
         ('Header', {
             'fields': ('logo',)
         }),

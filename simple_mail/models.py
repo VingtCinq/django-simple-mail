@@ -42,11 +42,6 @@ class SimpleMailConfig(SingletonModel):
         (TITLE_SIZE_H2, 'h2'),
         (TITLE_SIZE_H3, 'h3'),
     )
-
-    # General
-    base_url = models.URLField(verbose_name=_("Base url"), max_length=255, default="http://localhost:8000")
-    from_email = models.EmailField(verbose_name=_("From Email"), max_length=255, default="webmaster@localhost")
-    from_name = models.CharField(verbose_name=_("From Name"), max_length=255, default="Company Inc")
     # Header
     logo = models.ImageField(verbose_name=_("Logo"), upload_to="simple_mail", blank=True, null=True)
     # footer
@@ -118,10 +113,6 @@ class SimpleMailConfig(SingletonModel):
             return self.resized_logo.url
         return None
 
-    @property
-    def from_(self):
-        return "{from_name} <{from_email}>".format(from_name=self.from_name, from_email=self.from_email)
-
     class Meta:
         verbose_name = 'Configuration'
         verbose_name_plural = 'Configuration'
@@ -162,40 +153,35 @@ class SimpleMail(models.Model):
         verbose_name_plural = 'Emails'
 
     def render(self, context={}, template=None):
-        config = SimpleMailConfig.get_singleton()
-        base_context = config.context
-        base_context['banner_url'] = self.banner_url
-        base_context.update(context)
-        subject = Template(self.subject).render(Context(base_context))
-        base_context.update({
-            'title': Template(self.title).render(Context(base_context)),
-            'subject': subject,
-            'footer_content': Template(base_context.get('footer_content')).render(Context(base_context)),
-            'button_label': Template(self.button_label).render(Context(base_context)),
-            'button_link': Template(self.button_link).render(Context(base_context)),
-            'body': Template(self.body).render(Context(base_context)),
+        config_context = SimpleMailConfig.get_singleton().context
+        config_context['banner_url'] = self.banner_url
+        config_context.update(context)
+        config_context.update({
+            'title': Template(self.title).render(Context(context)),
+            'subject': Template(self.subject).render(Context(context)),
+            'footer_content': Template(config_context.get('footer_content')).render(Context(context)),
+            'button_label': Template(self.button_label).render(Context(context)),
+            'button_link': Template(self.button_link).render(Context(context)),
+            'body': Template(self.body).render(Context(context)),
         })
         if template is None:
             template = getattr(settings, 'SIMPLE_MAIL_DEFAULT_TEMPLATE', 'simple_mail/default.html')
-        html = loader.render_to_string(template, base_context)
-        html = transform(html, base_url=config.base_url)
+        html = loader.render_to_string(template, config_context)
+        html = transform(html)
         h = html2text.HTML2Text()
         h.ignore_images = True
         h.ignore_tables = True
         text = h.handle(html)
         response = {
-            'subject': subject,
+            'subject': config_context.get('subject'),
             'message': text,
-            'html_message': html,
-            'from_email': config.from_
+            'html_message': html
         }
         return response
 
     def get_email_message(self, to, context={}, template=None, from_email=None, bcc=[],
                           connection=None, attachments=[], headers={}, cc=[], reply_to=[]):
         email_kwargs = self.render(context, template)
-        if from_email is None:
-            from_email = email_kwargs.get('from_email')
         email_message = EmailMultiAlternatives(
             subject=email_kwargs.get('subject'),
             body=email_kwargs.get('message'),
