@@ -1,4 +1,4 @@
-[![django-simple-mail v2.2.0 on PyPi](https://img.shields.io/badge/pypi-2.2.0-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v2.2.1 on PyPi](https://img.shields.io/badge/pypi-2.2.1-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -8,6 +8,7 @@ Simple customizable email template built for Django
 
 # Changelog
 
++ 2.2.1 Remove cssutils Warning from logs
 + In the 2.2.* version the following fields `from_email`, `from_name` and `base_url` where removed. Those parameters should be defined in code rather than from the admin. 
 + The 2.* versions have breaking changes from the 1.* and are not backward compatible.
 
@@ -228,6 +229,21 @@ simple_mailer.register(WelcomeMail)
 ```
 
 This method impact the fields displayed in the **Context** section of the admin.
+
+## Settings
+
+Here are all the settings you can use, with their default value :
+
+```
+# enable django-modeltranslation integration
+SIMPLE_MAIL_USE_MODELTRANSALTION = False
+# enable django-ckeditor integration
+SIMPLE_MAIL_USE_CKEDITOR = False
+# set default email template
+SIMPLE_MAIL_DEFAULT_TEMPLATE = 'simple_mail/default.html'
+# enable/disable cssutils warning logs
+SIMPLE_MAIL_LOG_CSS_WARNING = False
+```
 
 ## Mail configuration & edition
 

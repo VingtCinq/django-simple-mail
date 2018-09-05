@@ -1,4 +1,4 @@
-|django-simple-mail v2.2.0 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.2.1 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -8,6 +8,7 @@ Simple customizable email template built for Django
 Changelog
 =========
 
+-  2.2.1 Remove cssutils Warning from logs
 -  In the 2.2.\* version the following fields ``from_email``,
    ``from_name`` and ``base_url`` where removed. Those parameters should
    be defined in code rather than from the admin.
@@ -256,6 +257,22 @@ This method should not take any argument :
 This method impact the fields displayed in the **Context** section of
 the admin.
 
+Settings
+--------
+
+Here are all the settings you can use, with their default value :
+
+::
+
+    # enable django-modeltranslation integration
+    SIMPLE_MAIL_USE_MODELTRANSALTION = False
+    # enable django-ckeditor integration
+    SIMPLE_MAIL_USE_CKEDITOR = False
+    # set default email template
+    SIMPLE_MAIL_DEFAULT_TEMPLATE = 'simple_mail/default.html'
+    # enable/disable cssutils warning logs
+    SIMPLE_MAIL_LOG_CSS_WARNING = False
+
 Mail configuration & edition
 ----------------------------
 
@@ -308,13 +325,6 @@ Or by setting ``SIMPLE_MAIL_DEFAULT_TEMPLATE`` in your settings :
 
     SIMPLE_MAIL_DEFAULT_TEMPLATE = 'my_app/my_email_template.html'
 
-CSSUtils Logs
----------------
-To avoid CSSUtils warning and overloading your logs:
-
-``SIMPLE_MAIL_CSS_WARNING = True``
-
-
 Support
 -------
 
@@ -325,7 +335,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.2.0 on PyPi| image:: https://img.shields.io/badge/pypi-2.2.0-green.svg
+.. |django-simple-mail v2.2.1 on PyPi| image:: https://img.shields.io/badge/pypi-2.2.1-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

@@ -12,7 +12,13 @@ class SimpleMailConfig(AppConfig):
     def ready(self):
         autodiscover()
 
-        if getattr(settings, 'SIMPLE_MAIL_CSS_WARNING', False):
+        if not getattr(settings, 'SIMPLE_MAIL_LOG_CSS_WARNING', False):
+            """
+            By default cssutils log CSS Warning
+            We prevent those logs to keep a clean log but you can
+            still enable them by setting `SIMPLE_MAIL_LOG_CSS_WARNING = True`
+            Snippet taken from https://gist.github.com/texuf/1e1ef7fce7aaa67caf4d
+            """
             from cssutils import profile
             from cssutils.profiles import Profiles, properties, macros
             # patch um up
