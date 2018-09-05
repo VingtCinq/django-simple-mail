@@ -308,6 +308,13 @@ Or by setting ``SIMPLE_MAIL_DEFAULT_TEMPLATE`` in your settings :
 
     SIMPLE_MAIL_DEFAULT_TEMPLATE = 'my_app/my_email_template.html'
 
+CSSUtils Logs
+---------------
+To avoid CSSUtils warning and overloading your logs:
+
+``SIMPLE_MAIL_CSS_WARNING = True``
+
+
 Support
 -------
 
