@@ -311,6 +311,7 @@ Or by setting ``SIMPLE_MAIL_DEFAULT_TEMPLATE`` in your settings :
 CSSUtils Logs
 ---------------
 To avoid CSSUtils warning and overloading your logs:
+
 ``SIMPLE_MAIL_CSS_WARNING = True``
 
 
