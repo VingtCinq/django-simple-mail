@@ -2,7 +2,6 @@ from functools import update_wrapper
 
 from django import forms
 from django.contrib import admin, messages
-from django.contrib import admin
 from django.template import loader
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -72,8 +71,10 @@ class SimpleMailConfigAdmin(modelAdminClass):
         return False
 
     def get_urls(self):
-        
-        from django.urls import path
+        try:
+            from django.urls import re_path
+        except ImportError:
+            from django.conf.urls import url as re_path
 
         def wrap(view):
             def wrapper(*args, **kwargs):
@@ -84,11 +85,13 @@ class SimpleMailConfigAdmin(modelAdminClass):
         info = self.model._meta.app_label, self.model._meta.model_name
 
         urlpatterns = [
-            path('', wrap(RedirectView.as_view(
+            re_path(r'^$', wrap(RedirectView.as_view(
                 pattern_name='%s:%s_%s_change' % ((self.admin_site.name,) + info)
             )), name='%s_%s_changelist' % info),
-            path('history/', wrap(self.history_view), {'object_id': str(self.singleton_instance_id)}, name='%s_%s_history' % info),
-            path('change/', wrap(self.change_view), {'object_id': str(self.singleton_instance_id)}, name='%s_%s_change' % info),
+            re_path(r'^history/$', wrap(self.history_view),
+                    {'object_id': str(self.singleton_instance_id)}, name='%s_%s_history' % info),
+            re_path(r'^change/$', wrap(self.change_view),
+                    {'object_id': str(self.singleton_instance_id)}, name='%s_%s_change' % info),
         ]
         return urlpatterns + super().get_urls()
 
@@ -241,15 +244,19 @@ class SimpleMailAdmin(modelAdminClass):
         )
 
     def get_urls(self):
-        from django.urls import path
+        try:
+            from django.urls import re_path
+        except ImportError:
+            from django.conf.urls import url as re_path
+
         return [
-            path(
-                '<id>/send-test-mail/',
+            re_path(
+                r'^(?P<id>\d+)/send-test-mail/$',
                 self.admin_site.admin_view(self.send_test_mail),
                 name='send_test_mail',
             ),
-            path(
-                '<id>/preview-mail/',
+            re_path(
+                r'^(?P<id>\d+)/preview-mail/$',
                 self.admin_site.admin_view(self.preview_mail),
                 name='preview_mail',
             ),
