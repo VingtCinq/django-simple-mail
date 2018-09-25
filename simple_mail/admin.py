@@ -15,6 +15,7 @@ from django.contrib.admin.options import IS_POPUP_VAR
 from django.template.response import TemplateResponse
 from django.views.generic import RedirectView
 from django.conf import settings
+from django.utils import six
 
 from simple_mail.forms import AdminSendTestMailForm
 from simple_mail.models import SimpleMail, SimpleMailConfig
@@ -93,7 +94,11 @@ class SimpleMailConfigAdmin(modelAdminClass):
             re_path(r'^change/$', wrap(self.change_view),
                     {'object_id': str(self.singleton_instance_id)}, name='%s_%s_change' % info),
         ]
-        return urlpatterns + super().get_urls()
+        if six.PY3:
+            parent_urlpatterns = super().get_urls()
+        else:
+            parent_urlpatterns = super(SimpleMailConfigAdmin, self).get_urls()
+        return urlpatterns + parent_urlpatterns
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         if object_id == str(self.singleton_instance_id):
@@ -249,6 +254,11 @@ class SimpleMailAdmin(modelAdminClass):
         except ImportError:
             from django.conf.urls import url as re_path
 
+        if six.PY3:
+            parent_urlpatterns = super().get_urls()
+        else:
+            parent_urlpatterns = super(SimpleMailAdmin, self).get_urls()
+
         return [
             re_path(
                 r'^(?P<id>\d+)/send-test-mail/$',
@@ -260,6 +270,7 @@ class SimpleMailAdmin(modelAdminClass):
                 self.admin_site.admin_view(self.preview_mail),
                 name='preview_mail',
             ),
-        ] + super().get_urls()
+        ] + parent_urlpatterns
+
 
 admin.site.register(SimpleMail, SimpleMailAdmin)
