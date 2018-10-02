@@ -10,7 +10,7 @@
 """
 
 __title__ = 'Simple Mail'
-__version__ = '2.2.1'
+__version__ = '2.2.2'
 __author__ = 'Charles TISSIER'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2017 Charles TISSIER'
