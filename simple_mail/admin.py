@@ -128,6 +128,7 @@ class SimpleMailAdmin(modelAdminClass):
     '''
     list_display = ('key', 'subject',)
     readonly_fields = ('key', 'created_at', 'updated_at', 'available_context',)
+    actions = None
     send_test_mail_form = AdminSendTestMailForm
 
     simplemail_send_test_mail_template = None
