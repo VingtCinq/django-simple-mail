@@ -15,12 +15,13 @@ class BaseSimpleMail(object):
 
     def __init__(self, *args, **kwargs):
         if self.email_key is None:
-            raise ImproperlyConfigured('%s must have an `email_key` property.' % self.__class__.__name__)
+            raise ImproperlyConfigured(
+                '%s must have an `email_key` property.' % self.__class__.__name__)
         super(BaseSimpleMail, self).__init__(*args, **kwargs)
 
     def set_test_context(self):
         pass
-    
+
     def set_context(self, *args, **kwargs):
         pass
 
@@ -41,8 +42,16 @@ class BaseSimpleMail(object):
              connection=None, attachments=[], headers={}, cc=[], reply_to=[], fail_silently=False):
         mail = self.get_mail()
         return mail.send(to, self.context, self.template, from_email, bcc,
-                              connection, attachments, headers, cc, reply_to, fail_silently)
-        
+                         connection, attachments, headers, cc, reply_to, fail_silently)
+
+    def send_mass_mail(self, to, context={}, template=None, from_email=None, bcc=[],
+                       connection=None, attachments=[], headers={}, cc=[], reply_to=[],
+                       fail_silently=False, auth_user=None, auth_password=None):
+        mail = self.get_mail()
+        return mail.send_mass_mail(to, self.context, self.template, from_email, bcc,
+                                   connection, attachments, headers, cc, reply_to,
+                                   fail_silently, auth_user, auth_password)
+
 
 class AlreadyRegistered(Exception):
     pass
@@ -54,9 +63,10 @@ class SimpleMailer(object):
 
     def register(self, mail):
         if mail.email_key in self._registry:
-            raise AlreadyRegistered('Mail "%s" is already registered' % mail.__class__.__name__)
+            raise AlreadyRegistered(
+                'Mail "%s" is already registered' % mail.__class__.__name__)
         self._registry[mail.email_key] = mail
-    
+
     def save_mails(self):
         from simple_mail.models import SimpleMail
         created_mails = []
@@ -65,7 +75,7 @@ class SimpleMailer(object):
             if created:
                 created_mails.append(value)
         return created_mails
-    
+
     def delete_mails(self):
         from simple_mail.models import SimpleMail
         mails = SimpleMail.objects.all()
@@ -76,11 +86,13 @@ class SimpleMailer(object):
                 mail.delete()
         return deleted_mails
 
+
 simple_mailer = SimpleMailer()
 
 
 def autodiscover():
-    mods = [(app_config.name, app_config.module) for app_config in apps.get_app_configs()]
+    mods = [(app_config.name, app_config.module)
+            for app_config in apps.get_app_configs()]
 
     for (app, mod) in mods:
         # Attempt to import the app's translation module.

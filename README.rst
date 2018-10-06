@@ -1,4 +1,4 @@
-|django-simple-mail v2.2.3 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.2.4 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -8,6 +8,7 @@ Simple customizable email template built for Django
 Changelog
 =========
 
+-  2.2.4 Add ``send_mass_mail`` method to ``BaseSimpleMail``
 -  2.2.3 Remove actions from admin (we do not have delete permissions)
 -  2.2.2 Add Django 1.9 and Python 2 compatibility
 -  2.2.1 Remove cssutils Warning from logs
@@ -337,7 +338,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.2.3 on PyPi| image:: https://img.shields.io/badge/pypi-2.2.3-green.svg
+.. |django-simple-mail v2.2.4 on PyPi| image:: https://img.shields.io/badge/pypi-2.2.4-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
