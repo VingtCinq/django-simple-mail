@@ -34,8 +34,8 @@ def get_widgets():
     return widgets
 
 if getattr(settings, 'SIMPLE_MAIL_USE_MODELTRANSALTION', False):
-    from modeltranslation.admin import TranslationAdmin
-    modelAdminClass = TranslationAdmin
+    from modeltranslation.admin import TabbedTranslationAdmin
+    modelAdminClass = TabbedTranslationAdmin
 else:
     modelAdminClass = admin.ModelAdmin
 
