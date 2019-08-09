@@ -158,7 +158,7 @@ class SimpleMail(models.Model):
         config_context.update(context)
         config_context.update({
             'title': Template(self.title).render(Context(context)),
-            'subject': Template(self.subject).render(Context(context)),
+            'subject': Template("{%% autoescape off %%}%s{%% endautoescape %%}" % self.subject).render(Context(context)),
             'footer_content': Template(config_context.get('footer_content')).render(Context(context)),
             'button_label': Template(self.button_label).render(Context(context)),
             'button_link': Template(self.button_link).render(Context(context)),
