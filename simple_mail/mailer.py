@@ -44,7 +44,7 @@ class BaseSimpleMail(object):
         return mail.send(to, self.context, self.template, from_email, bcc,
                          connection, attachments, headers, cc, reply_to, fail_silently)
 
-    def send_mass_mail(self, to, context={}, template=None, from_email=None, bcc=[],
+    def send_mass_mail(self, to, from_email=None, bcc=[],
                        connection=None, attachments=[], headers={}, cc=[], reply_to=[],
                        fail_silently=False, auth_user=None, auth_password=None):
         mail = self.get_mail()
