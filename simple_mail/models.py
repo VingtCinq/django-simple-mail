@@ -7,7 +7,6 @@ from django.conf import settings
 from django.template import (Context, Template, loader)
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
 
 from pilkit.processors import ResizeToFit
 from imagekit.models import ImageSpecField
@@ -31,7 +30,6 @@ class SingletonModel(models.Model):
         return obj
 
 
-@python_2_unicode_compatible
 class SimpleMailConfig(SingletonModel):
 
     TITLE_SIZE_H1 = 'h1'
@@ -118,7 +116,6 @@ class SimpleMailConfig(SingletonModel):
         verbose_name_plural = 'Configuration'
 
 
-@python_2_unicode_compatible
 class SimpleMail(models.Model):
     """
     Define an email

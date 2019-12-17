@@ -1,4 +1,4 @@
-[![django-simple-mail v2.2.6 on PyPi](https://img.shields.io/badge/pypi-2.2.6-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v3.3.0 on PyPi](https://img.shields.io/badge/pypi-3.3.0-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -8,6 +8,7 @@ Simple customizable email template built for Django
 
 # Changelog
 
++ 2.3.0 Drop Python 2 support and add Django 3.0 compatibility
 + 2.2.6 Disable autoescape for email subject
 + 2.2.5 Remove unused arguments from `send_mass_mail` method of `BaseSimpleMail`
 + 2.2.4 Add `send_mass_mail` method to `BaseSimpleMail`
