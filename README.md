@@ -1,4 +1,4 @@
-[![django-simple-mail v3.3.0 on PyPi](https://img.shields.io/badge/pypi-3.3.0-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v2.3.0 on PyPi](https://img.shields.io/badge/pypi-2.3.0-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
