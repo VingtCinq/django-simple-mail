@@ -251,10 +251,7 @@ class SimpleMailAdmin(modelAdminClass):
         except ImportError:
             from django.conf.urls import url as re_path
 
-        if six.PY3:
-            parent_urlpatterns = super().get_urls()
-        else:
-            parent_urlpatterns = super(SimpleMailAdmin, self).get_urls()
+        parent_urlpatterns = super().get_urls()
 
         return [
             re_path(

@@ -49,8 +49,7 @@ setup(
         'html2text>=2018.1.9',
         'premailer>=3.2.0',
         'Pillow>=5.2.0',
-        'django-imagekit>=4.0.2',
-        'six>=1.11.0',
+        'django-imagekit>=4.0.2'
     ],
     # test_suite='tests',
 )
