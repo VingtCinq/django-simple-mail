@@ -1,4 +1,4 @@
-[![django-simple-mail v2.3.1 on PyPi](https://img.shields.io/badge/pypi-2.3.1-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
+[![django-simple-mail v2.3.2 on PyPi](https://img.shields.io/badge/pypi-2.3.2-green.svg)](https://pypi.python.org/pypi/django-simple-mail)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -8,6 +8,7 @@ Simple customizable email template built for Django
 
 # Changelog
 
++ 2.3.2 Add `SIMPLE_MAIL_FILE_STORAGE` setting
 + 2.3.1 Fix six import issue
 + 2.3.0 Drop Python 2 support and add Django 3.0 compatibility
 + 2.2.6 Disable autoescape for email subject
@@ -16,7 +17,7 @@ Simple customizable email template built for Django
 + 2.2.3 Remove actions from admin (we do not have delete permissions)
 + 2.2.2 Add Django 1.9 and Python 2 compatibility
 + 2.2.1 Remove cssutils Warning from logs
-+ In the 2.2.* version the following fields `from_email`, `from_name` and `base_url` where removed. Those parameters should be defined in code rather than from the admin. 
++ In the 2.2.* version the following fields `from_email`, `from_name` and `base_url` where removed. Those parameters should be defined in code rather than from the admin.
 + The 2.* versions have breaking changes from the 1.* and are not backward compatible.
 
 ## Template preview
@@ -226,7 +227,7 @@ class WelcomeMail(BaseSimpleMail):
             'user': user,
             'welcome_link': welcome_link
         }
-    
+
     def set_test_context(self):
         user_id = User.objects.order_by('?').first().id
         self.set_context(user_id, 'http://my-webiste.com/my-path')
@@ -250,6 +251,8 @@ SIMPLE_MAIL_USE_CKEDITOR = False
 SIMPLE_MAIL_DEFAULT_TEMPLATE = 'simple_mail/default.html'
 # enable/disable cssutils warning logs
 SIMPLE_MAIL_LOG_CSS_WARNING = False
+# storage for logo and banner
+SIMPLE_MAIL_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 ```
 
 ## Mail configuration & edition

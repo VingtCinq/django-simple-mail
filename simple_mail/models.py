@@ -7,12 +7,15 @@ from django.conf import settings
 from django.template import (Context, Template, loader)
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.utils.translation import ugettext_lazy as _
+from django.core.files.storage import get_storage_class
 
 from pilkit.processors import ResizeToFit
 from imagekit.models import ImageSpecField
 from simple_mail.fields import SimpleMailRichTextField
 from premailer import transform
 
+
+simple_mail_file_storage = get_storage_class(getattr(settings, 'SIMPLE_MAIL_FILE_STORAGE'))()
 
 class SingletonModel(models.Model):
     singleton_instance_id = 1
@@ -41,7 +44,7 @@ class SimpleMailConfig(SingletonModel):
         (TITLE_SIZE_H3, 'h3'),
     )
     # Header
-    logo = models.ImageField(verbose_name=_("Logo"), upload_to="simple_mail", blank=True, null=True)
+    logo = models.ImageField(verbose_name=_("Logo"), upload_to="simple_mail", blank=True, null=True, storage=simple_mail_file_storage)
     # footer
     footer_content = SimpleMailRichTextField(config_name="simple_mail_b", verbose_name=_("Footer"), blank=True)
     facebook_url = models.URLField(verbose_name=_("Facebook Url"), max_length=255, blank=True)
@@ -75,7 +78,7 @@ class SimpleMailConfig(SingletonModel):
     COLOR_FIELDS = ['color_header_bg', 'color_title', 'color_body_bg', 'color_body', 'color_body_link',
                     'color_button', 'color_button_bg', 'color_footer', 'color_footer_link', 'color_footer_bg',
                     'color_footer_divider']
-    
+
     SIZING_FIELDS = ['border_radius_button', 'title_size']
 
     def __str__(self):
@@ -124,7 +127,7 @@ class SimpleMail(models.Model):
     subject = models.CharField(max_length=255, verbose_name=_("Subject"))
     title = models.CharField(max_length=255, verbose_name=_("Title"), blank=True)
     body = SimpleMailRichTextField(config_name="simple_mail_p", verbose_name=_("Content"))
-    banner = models.ImageField(verbose_name=_("Banner"), upload_to="simple_mail", blank=True, null=True)
+    banner = models.ImageField(verbose_name=_("Banner"), upload_to="simple_mail", blank=True, null=True, storage=simple_mail_file_storage)
     button_label = models.CharField(verbose_name=_("Button label"), max_length=80, blank=True)
     button_link = models.CharField(verbose_name=_("Button Link"), max_length=255, blank=True)
 
@@ -135,7 +138,7 @@ class SimpleMail(models.Model):
 
     created_at = models.DateTimeField(verbose_name=_("Created at"), auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name=_("Updated at"), auto_now=True)
-    
+
     def __str__(self):
         return self.key
 

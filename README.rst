@@ -1,4 +1,4 @@
-|django-simple-mail v2.3.1 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.3.2 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -8,6 +8,7 @@ Simple customizable email template built for Django
 Changelog
 =========
 
+-  2.3.2 Add ``SIMPLE_MAIL_FILE_STORAGE`` setting
 -  2.3.1 Fix six import issue
 -  2.3.0 Drop Python 2 support and add Django 3.0 compatibility
 -  2.2.6 Disable autoescape for email subject
@@ -254,7 +255,7 @@ This method should not take any argument :
                'user': user,
                'welcome_link': welcome_link
            }
-       
+
        def set_test_context(self):
            user_id = User.objects.order_by('?').first().id
            self.set_context(user_id, 'http://my-webiste.com/my-path')
@@ -280,6 +281,8 @@ Here are all the settings you can use, with their default value :
    SIMPLE_MAIL_DEFAULT_TEMPLATE = 'simple_mail/default.html'
    # enable/disable cssutils warning logs
    SIMPLE_MAIL_LOG_CSS_WARNING = False
+   # storage for logo and banner
+   SIMPLE_MAIL_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 Mail configuration & edition
 ----------------------------
@@ -343,7 +346,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.3.1 on PyPi| image:: https://img.shields.io/badge/pypi-2.3.1-green.svg
+.. |django-simple-mail v2.3.2 on PyPi| image:: https://img.shields.io/badge/pypi-2.3.2-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
