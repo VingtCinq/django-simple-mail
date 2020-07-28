@@ -71,6 +71,7 @@ class SimpleMailConfig(SingletonModel):
     color_footer_divider = models.CharField(verbose_name=_("Footer divider"), max_length=7, default="#505050")
 
     resized_logo = ImageSpecField(source='logo',
+                                  cachefile_storage=simple_mail_file_storage,
                                   processors=[ResizeToFit(392, None)],
                                   format='JPEG',
                                   options={'quality': 90})
@@ -132,6 +133,7 @@ class SimpleMail(models.Model):
     button_link = models.CharField(verbose_name=_("Button Link"), max_length=255, blank=True)
 
     resized_banner = ImageSpecField(source='banner',
+                                    cachefile_storage=simple_mail_file_storage,
                                     processors=[ResizeToFit(1128, None)],
                                     format='JPEG',
                                     options={'quality': 90})

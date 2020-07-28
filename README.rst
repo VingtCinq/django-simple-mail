@@ -1,4 +1,4 @@
-|django-simple-mail v2.3.2 on PyPi| |MIT license| |Stable|
+|django-simple-mail v2.3.3 on PyPi| |MIT license| |Stable|
 
 django-simple-mail
 ==================
@@ -8,6 +8,7 @@ Simple customizable email template built for Django
 Changelog
 =========
 
+-  2.3.3 Add storage settings for ImageSpecField
 -  2.3.2 Add ``SIMPLE_MAIL_FILE_STORAGE`` setting
 -  2.3.1 Fix six import issue
 -  2.3.0 Drop Python 2 support and add Django 3.0 compatibility
@@ -346,7 +347,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |django-simple-mail v2.3.2 on PyPi| image:: https://img.shields.io/badge/pypi-2.3.2-green.svg
+.. |django-simple-mail v2.3.3 on PyPi| image:: https://img.shields.io/badge/pypi-2.3.3-green.svg
    :target: https://pypi.python.org/pypi/django-simple-mail
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
