@@ -127,7 +127,7 @@ class SimpleMail(models.Model):
     key = models.CharField(verbose_name=_("Email Key"), editable=False, max_length=100, unique=True)
     subject = models.CharField(max_length=255, verbose_name=_("Subject"))
     title = models.CharField(max_length=255, verbose_name=_("Title"), blank=True)
-    body = SimpleMailRichTextField(config_name="simple_mail_p", verbose_name=_("Content"))
+    body = SimpleMailRichTextField(config_name="simple_mail_p", verbose_name=_("Content"), blank=True)
     banner = models.ImageField(verbose_name=_("Banner"), upload_to="simple_mail", blank=True, null=True, storage=simple_mail_file_storage)
     button_label = models.CharField(verbose_name=_("Button label"), max_length=80, blank=True)
     button_link = models.CharField(verbose_name=_("Button Link"), max_length=255, blank=True)

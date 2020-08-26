@@ -93,3 +93,6 @@ ENV/
 
 # Sonarlint
 .sonarlint
+
+# Pycharm
+.idea
