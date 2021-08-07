@@ -12,11 +12,13 @@ class BaseSimpleMail(object):
     email_key = None
     template = None
     context = {}
+    predefined_mail_data = {"subject": None, "title": None, "body": None}
 
     def __init__(self, *args, **kwargs):
         if self.email_key is None:
             raise ImproperlyConfigured(
-                '%s must have an `email_key` property.' % self.__class__.__name__)
+                "%s must have an `email_key` property." % self.__class__.__name__
+            )
         super(BaseSimpleMail, self).__init__(*args, **kwargs)
 
     def set_test_context(self):
@@ -28,6 +30,7 @@ class BaseSimpleMail(object):
     @classmethod
     def get_mail(cls):
         from simple_mail.models import SimpleMail
+
         return SimpleMail.objects.get(key=cls.email_key)
 
     def render(self):
@@ -38,19 +41,63 @@ class BaseSimpleMail(object):
         mail = self.get_mail()
         return mail.send(to, self.context, self.template)
 
-    def send(self, to, from_email=None, bcc=[],
-             connection=None, attachments=[], headers={}, cc=[], reply_to=[], fail_silently=False):
+    def send(
+        self,
+        to,
+        from_email=None,
+        bcc=[],
+        connection=None,
+        attachments=[],
+        headers={},
+        cc=[],
+        reply_to=[],
+        fail_silently=False,
+    ):
         mail = self.get_mail()
-        return mail.send(to, self.context, self.template, from_email, bcc,
-                         connection, attachments, headers, cc, reply_to, fail_silently)
+        return mail.send(
+            to,
+            self.context,
+            self.template,
+            from_email,
+            bcc,
+            connection,
+            attachments,
+            headers,
+            cc,
+            reply_to,
+            fail_silently,
+        )
 
-    def send_mass_mail(self, to, from_email=None, bcc=[],
-                       connection=None, attachments=[], headers={}, cc=[], reply_to=[],
-                       fail_silently=False, auth_user=None, auth_password=None):
+    def send_mass_mail(
+        self,
+        to,
+        from_email=None,
+        bcc=[],
+        connection=None,
+        attachments=[],
+        headers={},
+        cc=[],
+        reply_to=[],
+        fail_silently=False,
+        auth_user=None,
+        auth_password=None,
+    ):
         mail = self.get_mail()
-        return mail.send_mass_mail(to, self.context, self.template, from_email, bcc,
-                                   connection, attachments, headers, cc, reply_to,
-                                   fail_silently, auth_user, auth_password)
+        return mail.send_mass_mail(
+            to,
+            self.context,
+            self.template,
+            from_email,
+            bcc,
+            connection,
+            attachments,
+            headers,
+            cc,
+            reply_to,
+            fail_silently,
+            auth_user,
+            auth_password,
+        )
 
 
 class AlreadyRegistered(Exception):
@@ -64,20 +111,44 @@ class SimpleMailer(object):
     def register(self, mail):
         if mail.email_key in self._registry:
             raise AlreadyRegistered(
-                'Mail "%s" is already registered' % mail.__class__.__name__)
+                'Mail "%s" is already registered' % mail.__class__.__name__
+            )
         self._registry[mail.email_key] = mail
+
+    def save_predefined_data(self, obj, mail):
+        """
+        To save Email predefined data on create.
+        """
+        data = mail.predefined_mail_data
+
+        subject = data.get("subject", None)
+        if subject:
+            obj.subject = subject
+
+        title = data.get("title", None)
+        if title:
+            obj.title = title
+
+        body = data.get("body", None)
+        if body:
+            obj.body = body
+
+        obj.save()
 
     def save_mails(self):
         from simple_mail.models import SimpleMail
+
         created_mails = []
         for key, value in self._registry.items():
             obj, created = SimpleMail.objects.get_or_create(key=key)
             if created:
+                self.save_predefined_data(obj=obj, mail=value)
                 created_mails.append(value)
         return created_mails
 
     def delete_mails(self):
         from simple_mail.models import SimpleMail
+
         mails = SimpleMail.objects.all()
         deleted_mails = []
         for mail in mails:
@@ -91,12 +162,13 @@ simple_mailer = SimpleMailer()
 
 
 def autodiscover():
-    mods = [(app_config.name, app_config.module)
-            for app_config in apps.get_app_configs()]
+    mods = [
+        (app_config.name, app_config.module) for app_config in apps.get_app_configs()
+    ]
 
     for (app, mod) in mods:
         # Attempt to import the app's translation module.
-        module = '%s.mails' % app
+        module = "%s.mails" % app
         before_import_registry = copy.copy(simple_mailer._registry)
         try:
             import_module(module)
@@ -109,5 +181,5 @@ def autodiscover():
             # Decide whether to bubble up this error. If the app just
             # doesn't have an translation module, we can ignore the error
             # attempting to import it, otherwise we want it to bubble up.
-            if module_has_submodule(mod, 'mails'):
+            if module_has_submodule(mod, "mails"):
                 raise
