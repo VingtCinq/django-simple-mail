@@ -161,6 +161,7 @@ The ``email_key`` attribute must not exceed 100 characters.
 
    class WelcomeMail(BaseSimpleMail):
        email_key = 'welcome'
+       initial_data = {"subject": "Welcome", "title": "Welcome", "body": "Welcome to our app."}
 
 
    simple_mailer.register(WelcomeMail)
