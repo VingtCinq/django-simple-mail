@@ -1,7 +1,8 @@
 from ckeditor.widgets import CKEditorWidget, DEFAULT_CONFIG
+from django.conf import settings
 
 
-SIMPLE_MAIL_CKEDITOR_CONFIGS = {
+SIMPLE_MAIL_CKEDITOR_CONFIGS = getattr(settings, "SIMPLE_MAIL_CKEDITOR_CONFIGS", {
     'simple_mail_b': {
         'toolbar': 'simple_mail_b',
         'toolbar_simple_mail_b': [
@@ -29,7 +30,7 @@ SIMPLE_MAIL_CKEDITOR_CONFIGS = {
         'entities': False,
         'removeDialogTabs': 'link:advanced'
     }
-}
+})
 
 
 class SimpleMailCKEditorWidget(CKEditorWidget):

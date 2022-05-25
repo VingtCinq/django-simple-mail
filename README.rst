@@ -8,6 +8,7 @@ Simple customizable email template built for Django
 Changelog
 =========
 
+-  2.3.5 Add variable ``SIMPLE_MAIL_CKEDITOR_CONFIGS`` to leverage ckeditor configs
 -  2.3.4 Add default value for ``SIMPLE_MAIL_FILE_STORAGE`` setting
 -  2.3.3 Add storage settings for ImageSpecField
 -  2.3.2 Add ``SIMPLE_MAIL_FILE_STORAGE`` setting
