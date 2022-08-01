@@ -89,6 +89,7 @@ class SimpleMailConfig(SingletonModel):
     def context(self):
         return {
             'logo_url': self.logo_url,
+            'original_logo_url': self.original_logo_url,
             'footer_content': self.footer_content,
             'facebook_url': self.facebook_url,
             'twitter_url': self.twitter_url,
@@ -113,6 +114,12 @@ class SimpleMailConfig(SingletonModel):
     def logo_url(self):
         if self.logo:
             return self.resized_logo.url
+        return None
+
+    @property
+    def original_logo_url(self):
+        if self.logo:
+            return self.logo.url
         return None
 
     class Meta:
@@ -150,6 +157,12 @@ class SimpleMail(models.Model):
             return self.resized_banner.url
         return None
 
+    @property
+    def original_banner_url(self):
+        if self.banner:
+            return self.banner.url
+        return None
+
     class Meta:
         verbose_name = 'Email'
         verbose_name_plural = 'Emails'
@@ -157,6 +170,7 @@ class SimpleMail(models.Model):
     def render(self, context={}, template=None):
         config_context = SimpleMailConfig.get_singleton().context
         config_context['banner_url'] = self.banner_url
+        config_context['original_banner_url'] = self.original_banner_url
         config_context.update(context)
         config_context.update({
             'title': Template(self.title).render(Context(context)),
