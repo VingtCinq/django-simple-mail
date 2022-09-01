@@ -6,8 +6,12 @@ from django.db import models
 from django.conf import settings
 from django.template import (Context, Template, loader)
 from django.core.mail import EmailMultiAlternatives, get_connection
-from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import get_storage_class
+
+try:
+    from django.utils.translation import ugettext_lazy as _
+except ImportError:
+    from django.utils.translation import gettext_lazy as _
 
 from pilkit.processors import ResizeToFit
 from imagekit.models import ImageSpecField
