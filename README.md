@@ -140,6 +140,7 @@ from simple_mail.mailer import BaseSimpleMail, simple_mailer
 
 class WelcomeMail(BaseSimpleMail):
     email_key = 'welcome'
+    initial_data = {"subject": "Welcome", "title": "Welcome", "body": "Welcome to our app."}
 
 
 simple_mailer.register(WelcomeMail)

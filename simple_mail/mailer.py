@@ -12,6 +12,7 @@ class BaseSimpleMail(object):
     email_key = None
     template = None
     context = {}
+    initial_data = {"subject": None, "title": None, "body": None, "button_label": None, "button_link": None}
 
     def __init__(self, *args, **kwargs):
         if self.email_key is None:
@@ -28,6 +29,7 @@ class BaseSimpleMail(object):
     @classmethod
     def get_mail(cls):
         from simple_mail.models import SimpleMail
+
         return SimpleMail.objects.get(key=cls.email_key)
 
     def render(self):
@@ -67,12 +69,41 @@ class SimpleMailer(object):
                 'Mail "%s" is already registered' % mail.__class__.__name__)
         self._registry[mail.email_key] = mail
 
+    def save_initial_data(self, obj, mail):
+        """
+        To save Email initial data on create.
+        """
+        data = mail.initial_data
+
+        subject = data.get("subject", None)
+        if subject:
+            obj.subject = subject
+
+        title = data.get("title", None)
+        if title:
+            obj.title = title
+
+        body = data.get("body", None)
+        if body:
+            obj.body = body
+
+        button_label = data.get("button_label", None)
+        if button_label:
+            obj.button_label = button_label
+
+        button_link = data.get("button_link", None)
+        if button_link:
+            obj.button_link = button_link
+
+        obj.save()
+
     def save_mails(self):
         from simple_mail.models import SimpleMail
         created_mails = []
         for key, value in self._registry.items():
             obj, created = SimpleMail.objects.get_or_create(key=key)
             if created:
+                self.save_initial_data(obj=obj, mail=value)
                 created_mails.append(value)
         return created_mails
 
